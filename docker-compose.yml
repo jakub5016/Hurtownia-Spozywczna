@@ -6,6 +6,7 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: admin
+      POSTGRES_DB: Hurtownia-Database
     healthcheck:
       test: "pg_isready"
       interval: 10s
