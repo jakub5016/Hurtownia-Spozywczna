@@ -1,13 +1,16 @@
-# the base image
-FROM amazoncorretto:17
+FROM openjdk:17-oracle
 
-# the JAR file path
-ARG JAR_FILE=target/*.jar
+WORKDIR /app
 
-# Copy the JAR file from the build context into the Docker image
-COPY ${JAR_FILE} application.jar
+COPY ./ ./
 
-CMD apt-get update -y
+# Make the mvnw script executable
+RUN chmod +x mvnw
+RUN ./mvnw clean compile
+# Build the application
 
-# Set the default command to run the Java application
-ENTRYPOINT ["java", "-Xmx2048M", "-jar", "/application.jar"]
+# Expose the port the application runs on
+EXPOSE 8080
+
+# Run the application
+CMD ["./mvnw", "spring-boot:run"]
