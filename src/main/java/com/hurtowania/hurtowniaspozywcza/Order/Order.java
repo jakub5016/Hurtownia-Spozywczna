@@ -1,7 +1,8 @@
 package com.hurtowania.hurtowniaspozywcza.Order;
 
+import com.hurtowania.hurtowniaspozywcza.Client.Client;
 import com.hurtowania.hurtowniaspozywcza.OrderedProduct.OrderedProduct;
-import com.hurtowania.hurtowniaspozywcza.User.Client;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +30,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Client user;
+    private Client client;
 
     @OneToMany(mappedBy = "order")
     private List<OrderedProduct> orderedProducts;

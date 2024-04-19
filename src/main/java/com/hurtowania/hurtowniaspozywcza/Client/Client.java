@@ -1,6 +1,8 @@
-package com.hurtowania.hurtowniaspozywcza.User;
+package com.hurtowania.hurtowniaspozywcza.Client;
 
+import com.hurtowania.hurtowniaspozywcza.AppUser.AppUser;
 import com.hurtowania.hurtowniaspozywcza.Order.Order;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +25,9 @@ public class Client {
     @Column(nullable = false)
     private String address;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "client")
     private List<Order> orders;
+
+    @OneToOne(mappedBy = "client")
+    private AppUser appUser;
 }
