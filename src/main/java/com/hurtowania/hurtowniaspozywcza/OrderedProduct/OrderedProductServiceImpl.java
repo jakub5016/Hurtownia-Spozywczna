@@ -28,6 +28,7 @@ public class OrderedProductServiceImpl implements IOrderedProductService {
         }
 
         OrderedProduct orderedProduct = OrderedProduct.builder()
+                .id(new OrderedProductId(order.getId(), productId))
                 .order(order)
                 .product(product)
                 .quantity(quantity)
