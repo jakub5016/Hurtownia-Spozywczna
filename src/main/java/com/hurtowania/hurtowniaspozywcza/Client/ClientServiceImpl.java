@@ -35,6 +35,11 @@ public class ClientServiceImpl implements IClientService {
 
     @Override
     public void deleteClient(long clientId) {
-        clientRepository.deleteById(clientId);
+        Client client = clientRepository.findById(clientId).orElse(null);
+        if (client != null){
+            appUserService.delete(client.getAppUser());
+            clientRepository.delete(client);
+        }
+
     }
 }
