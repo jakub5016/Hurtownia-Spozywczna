@@ -33,7 +33,12 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public void deleteProduct(long productId) {
-        productRepository.deleteById(productId);
+        Product product = productRepository.findById(productId).orElse(null);
+        if (product != null) {
+            priceService.deletePrice(product.getPrice());
+            productRepository.deleteById(productId);
+        }
+
     }
 
 
