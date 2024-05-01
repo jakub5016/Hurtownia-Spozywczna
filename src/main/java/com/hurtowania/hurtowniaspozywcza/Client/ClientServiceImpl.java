@@ -37,8 +37,9 @@ public class ClientServiceImpl implements IClientService {
     public void deleteClient(long clientId) {
         Client client = clientRepository.findById(clientId).orElse(null);
         if (client != null){
-            appUserService.delete(client.getAppUser());
             clientRepository.delete(client);
+            appUserService.delete(client.getAppUser());
+
         }
 
     }
