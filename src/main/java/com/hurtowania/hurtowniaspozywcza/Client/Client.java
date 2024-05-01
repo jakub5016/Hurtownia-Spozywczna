@@ -28,6 +28,6 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
 
-    @OneToOne(mappedBy = "client")
+    @OneToOne
     private AppUser appUser;
 }
