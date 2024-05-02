@@ -31,11 +31,12 @@ import lombok.Setter;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.lang.String;
+
 
 @Component
 @Setter
 @Getter
-@AllArgsConstructor
 public class JwtUtil {
     private String jwtSecret = "a9332187b4a1cccbebaf3650ed54d87d8cb4df176ffb64172a4405679b55a807";
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
@@ -43,13 +44,12 @@ public class JwtUtil {
     private final String TOKEN_HEADER = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
 
-    private final JwtParser parser;
-
     private long jwtExpirationMs = 60*60*1000;
 
 
     private String jwtCookie = "cookie";
 
+    
     public String getJwtFromCookies(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, jwtCookie);
         if(cookie != null)
@@ -67,10 +67,6 @@ public class JwtUtil {
                 .compact();
     }
 
-    private Claims parseJwtClaims(String token) {
-        return parser.parseClaimsJws(token).getBody();
-    }
-
     public String resolveToken(HttpServletRequest request) {
 
         String bearerToken = request.getHeader(TOKEN_HEADER);
@@ -78,22 +74,6 @@ public class JwtUtil {
             return bearerToken.substring(TOKEN_PREFIX.length());
         }
         return null;
-    }
-
-    public Claims resolveClaims(HttpServletRequest req) {
-        try {
-            String token = resolveToken(req);
-            if (token != null) {
-                return parseJwtClaims(token);
-            }
-            return null;
-        } catch (ExpiredJwtException ex) {
-            req.setAttribute("expired", ex.getMessage());
-            throw ex;
-        } catch (Exception ex) {
-            req.setAttribute("invalid", ex.getMessage());
-            throw ex;
-        }
     }
 
     public boolean validateClaims(Claims claims) throws AuthException {
