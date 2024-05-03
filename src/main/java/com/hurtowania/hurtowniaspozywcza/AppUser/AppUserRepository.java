@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {    
     Optional<AppUser> findFirstByUserName(String userName);
+    boolean existsByUserName(String userName);
 }

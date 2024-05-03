@@ -11,9 +11,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.hurtowania.hurtowniaspozywcza.AppUser.AppUser;
 import com.hurtowania.hurtowniaspozywcza.AppUser.AppUserRepository;
+import com.hurtowania.hurtowniaspozywcza.AppUser.UserType;
 import com.hurtowania.hurtowniaspozywcza.AppUser.DTO.AuthAppUserResponseDTO;
+import com.hurtowania.hurtowniaspozywcza.AppUser.DTO.CreateAppUserDTO;
 import com.hurtowania.hurtowniaspozywcza.AppUser.DTO.LoginAppUserDTO;
+import com.hurtowania.hurtowniaspozywcza.Client.Client;
+import com.hurtowania.hurtowniaspozywcza.Client.ClientRepository;
 
 @Component
 public class AuthController {
@@ -29,6 +34,31 @@ public class AuthController {
     @Autowired
     AppUserRepository repo;
 
+    @Autowired
+    ClientRepository clientRepository;
+
+    public ResponseEntity<?> registerUser(CreateAppUserDTO payload) {
+
+        if(repo.existsByUserName(payload.getUserName())) {
+            return ResponseEntity.badRequest().body("Username is already in use!");
+        }
+
+        AppUser user = new AppUser();
+        user.setUserName(payload.getUserName());
+        user.setPassword(passwordEncoder.encode(payload.getPassword()));
+        user.setType(UserType.CLIENT);
+        
+        Client client = new Client();
+        client.setAddress(payload.getAddress());
+        client.setName(payload.getFirstName() + payload.getSecondName());
+        
+        user.setClient(client);
+
+        repo.save(user);
+        clientRepository.save(client);
+
+        return ResponseEntity.ok().body("User registered!");
+    }
 
     public ResponseEntity<?> authUser(LoginAppUserDTO payload){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

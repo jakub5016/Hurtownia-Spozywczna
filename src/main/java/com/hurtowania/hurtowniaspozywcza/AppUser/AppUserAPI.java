@@ -25,12 +25,6 @@ public class AppUserAPI {
     @GetMapping("/")
     public List<AppUser> getUsers() {
         return service.getAllUsers();
-    }
-
-    @PostMapping("/")
-    public String postMethodName(@RequestBody CreateAppUserDTO usr) {
-        return service.createAppUser(usr);
-    }
-    
+    }    
     
 }
