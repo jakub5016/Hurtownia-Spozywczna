@@ -38,7 +38,5 @@ public class AppUser {
     @Column(nullable = false)
     private UserType type;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", nullable = true)
-    private Client client;
+
 }   

@@ -15,12 +15,12 @@ public class OrderedProduct {
     @EmbeddedId
     private OrderedProductId id;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn
     @MapsId("orderId")
     private Order order;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn
     @MapsId("productId")
     private Product product;
