@@ -1,5 +1,6 @@
 package com.hurtowania.hurtowniaspozywcza.Client;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hurtowania.hurtowniaspozywcza.AppUser.AppUser;
 import com.hurtowania.hurtowniaspozywcza.Order.Order;
 
@@ -28,6 +29,7 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
 
-    @OneToOne
+    @OneToOne(mappedBy = "client", fetch = FetchType.LAZY)
+    @JsonIgnore
     private AppUser appUser;
 }
