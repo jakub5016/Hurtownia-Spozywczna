@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: Hurtownia-Database
+    healthcheck:
+      test: "pg_isready"
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+    ports:
+        - 5432:5432
+
+  backend:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_PORT: 5432
+      HOST_NAME: db
+      DB_NAME: Hurtownia-Database
+      DB_USERNAME: postgres
+      DB_PASSWORD: admin
+    ports:
+        - 8080:8080

@@ -1,0 +1,33 @@
+package com.hurtowania.hurtowniaspozywcza.Client;
+
+import com.hurtowania.hurtowniaspozywcza.AppUser.AppUser;
+import com.hurtowania.hurtowniaspozywcza.Order.Order;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Client {
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    private long id;
+
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
+    private String address;
+
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders;
+
+    @OneToOne
+    private AppUser appUser;
+}
