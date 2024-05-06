@@ -5,7 +5,13 @@ on: [push]
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
-
+    env:
+        DB_PORT: 5432
+        HOST_NAME: localhost
+        DB_NAME: Hurtownia-Database
+        DB_USERNAME: postgres
+        DB_PASSWORD: admin
+        
     services:
       db:
         image: postgres
@@ -37,13 +43,5 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
       
-      - name: Setup env variables
-        env:
-          DB_PORT: 5432
-          HOST_NAME: db
-          DB_NAME: Hurtownia-Database
-          DB_USERNAME: postgres
-          DB_PASSWORD: admin
-        
       - name: Run tests
-        run: mvn -f backend/pom.xml test
+        run: mvn -f pom.xml test
