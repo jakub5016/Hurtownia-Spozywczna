@@ -1,32 +1,31 @@
 import { Button, Grid } from "@mui/material"
 
-function AdminNav(props){
-    console.log(props)
+function StorekeeperNav(props){
     return(
-        localStorage.getItem("logged") != "null" && localStorage.getItem("userType") == 'admin' ?
+        localStorage.getItem("logged") != "null" && localStorage.getItem("userType") == 'storekeeper' ? 
         <Grid  container
         direction="row"
         justifyContent="flex-start"
         alignItems="center">
             <Grid  item xs={2}>
                 <Button variant="outlined" onClick={()=>props.setSelectedSite(1)}>
-                    Baza produktów
+                    Aktualne Zamówienia
                 </Button>
             </Grid>
 
             <Grid item xs={2}>
                 <Button variant="outlined" onClick={()=>props.setSelectedSite(2)}>
-                    Klienci
+                    Historia Zamówień
                 </Button>
             </Grid>
 
             <Grid  item xs={1}>
                 <Button variant="outlined" onClick={()=>props.setSelectedSite(3)}>
-                    Zamówienia
+                    Lista Produktów
                 </Button>
             </Grid>
         </Grid> : null
     )
 }
 
-export default AdminNav
+export default StorekeeperNav

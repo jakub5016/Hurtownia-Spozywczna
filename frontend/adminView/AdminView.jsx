@@ -8,9 +8,10 @@ function AdminView(props)
 {   
     console.log(props.selectedSite)
     return(
+    localStorage.getItem("logged") != "null" && localStorage.getItem("userType") == 'admin' ?
     <div className="container">
         {props.selectedSite == 1 ? <ProductTable/> : props.selectedSite == 2? <ClientTable/> : <OrderTable/>}
-    </div>
+    </div> : null
     )
 }
 

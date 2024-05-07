@@ -1,7 +1,7 @@
 
-import { Paper, Table, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Paper, Table, TableCell, TableContainer, TableHead, TableRow, useThemeProps } from "@mui/material"
 
-function OrderTable(){
+function OrderTable(props){
 
     return(
     <TableContainer component={Paper}  sx={{width:"80vw"}}>
@@ -18,9 +18,11 @@ function OrderTable(){
                     <TableCell  sx={{fontWeight:"bold"}}>
                         Data dostarczenia zamówiena
                     </TableCell>
+                    { props.type == null ?
                     <TableCell  sx={{fontWeight:"bold"}}>
                         Status zamówiena
-                    </TableCell>
+                    </TableCell> : null
+                    }
                     <TableCell  sx={{fontWeight:"bold"}}>
                         Cena Razem
                     </TableCell>

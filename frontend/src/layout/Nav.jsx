@@ -3,14 +3,21 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
 import { Button, Grid, Icon, IconButton } from "@mui/material";
 import AdminNav from "../../adminView/AdminNav";
+import StorekeeperNav from "../../storekeeperView/StorekeeperNav";
 
 
 function Nav(props){
+    
 
     return(        
         <Paper sx={{position:"sticky", padding:"20px", width:"90vw", display:"flex"}}>
-            {localStorage.getItem("userType") == "admin" ?
-            <AdminNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/> :  <div className="container"></div>}
+            {props.logged ?
+            localStorage.getItem("userType") == "admin" ?
+            <AdminNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/> :  
+            localStorage.getItem("userType") == "storekeeper"  ? 
+            <StorekeeperNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/>: 
+            <div className="container"></div>:<div className="container"></div>}
+           
             {/* User icon */}
             <div style={{textAlign:"right"}}> 
                 {props.logged ? 
@@ -21,7 +28,6 @@ function Nav(props){
                     <IconButton>
                         <LoginIcon sx={{fontSize:"40px"}}/>
                     </IconButton>}
-
             </div>
         </Paper>
     )

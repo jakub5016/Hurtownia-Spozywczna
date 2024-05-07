@@ -5,14 +5,17 @@ const Layout = ({ children }) => {
     const [logged, setLogged] = useState(false)
     const [userType, setUserType] = useState(null)
     useEffect(()=>{
-      localStorage.getItem("logged") == null ? setLogged(false) : setLogged(true)
+      // DEBUG
+      localStorage.setItem("logged", "yes")
       localStorage.setItem("userType", "admin")
+      // DEbug
+      localStorage.getItem("logged") == "null" ? setLogged(false) : setLogged(true)
     },[])
   
-  
+    console.log(localStorage.getItem("logged"))
     return (
       <div>
-          <Nav selectedSite={children.props.selectedSite} setSelectedSite={children.props.setSelectedSite} logged={logged} setLogged={setLogged}/>
+          <Nav selectedSite={children.props.selectedSite} setSelectedSite={children.props.setSelectedSite} logged={logged}/>
         {children}
       </div>
     );
