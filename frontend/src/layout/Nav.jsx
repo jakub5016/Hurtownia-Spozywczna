@@ -7,11 +7,10 @@ import AdminNav from "../../adminView/AdminNav";
 
 function Nav(props){
 
-    return(
-        <>
-        
+    return(        
         <Paper sx={{position:"sticky", padding:"20px", width:"90vw", display:"flex"}}>
-            <AdminNav/>
+            {localStorage.getItem("userType") == "admin" ?
+            <AdminNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/> :  <div className="container"></div>}
             {/* User icon */}
             <div style={{textAlign:"right"}}> 
                 {props.logged ? 
@@ -25,7 +24,6 @@ function Nav(props){
 
             </div>
         </Paper>
-        </>
     )
 }
 
