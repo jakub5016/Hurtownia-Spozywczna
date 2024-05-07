@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Layout from './layout/Layout.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginPage from '../login/LoginPage.jsx';
-import AdminView from '../adminView/AdminView.jsx';
-import StorekeeperView from '../storekeeperView/StorekeeperView.jsx';
+import LoginPage from './login/LoginPage.jsx';
+import AdminView from './adminView/AdminView.jsx';
+import StorekeeperView from './storekeeperView/StorekeeperView.jsx';
 
 function Main() {
   // Step 2: Initialize state
