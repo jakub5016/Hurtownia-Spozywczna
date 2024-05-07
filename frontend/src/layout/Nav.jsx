@@ -4,7 +4,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import { Button, Grid, Icon, IconButton } from "@mui/material";
 import AdminNav from "../../adminView/AdminNav";
 import StorekeeperNav from "../../storekeeperView/StorekeeperNav";
-
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 function Nav(props){
     
@@ -21,9 +21,14 @@ function Nav(props){
             {/* User icon */}
             <div style={{textAlign:"right"}}> 
                 {props.logged ? 
+                    <div style={{display:"flex"}}>
                     <IconButton>
                         <AccountCircleIcon sx={{fontSize:"40px"}}/>
                     </IconButton>
+                    <IconButton>
+                        <ExitToAppIcon sx={{fontSize:"40px"}}/>
+                    </IconButton>
+                    </div>
                     : 
                     <IconButton>
                         <LoginIcon sx={{fontSize:"40px"}}/>
