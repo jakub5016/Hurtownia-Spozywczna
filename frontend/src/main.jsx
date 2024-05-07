@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './login/LoginPage.jsx';
 import AdminView from './adminView/AdminView.jsx';
 import StorekeeperView from './storekeeperView/StorekeeperView.jsx';
+import ClientView from './clientView/ClientView.jsx';
 
 function Main() {
   // Step 2: Initialize state
@@ -39,6 +40,16 @@ function Main() {
               // Step 3: Pass state and setter as props
               <Layout selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
                 <StorekeeperView selectedSite={selectedSite} setSelectedSite={setSelectedSite}/>
+              </Layout>
+            }
+          />
+
+          <Route
+            path="/client"
+            element={ // Use the Layout component as the wrapper for the App component
+              // Step 3: Pass state and setter as props
+              <Layout selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
+                <ClientView selectedSite={selectedSite} setSelectedSite={setSelectedSite}/>
               </Layout>
             }
           />

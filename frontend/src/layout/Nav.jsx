@@ -5,6 +5,7 @@ import { Button, Grid, Icon, IconButton } from "@mui/material";
 import AdminNav from "../adminView/AdminNav";
 import StorekeeperNav from "../storekeeperView/StorekeeperNav";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import ClientNav from "../clientView/ClientNav";
 
 function Nav(props){
     
@@ -16,7 +17,10 @@ function Nav(props){
             <AdminNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/> :  
             localStorage.getItem("userType") == "storekeeper"  ? 
             <StorekeeperNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/>: 
-            <div className="container"></div>:<div className="container"></div>}
+            localStorage.getItem("userType") == "client"  ? 
+            <ClientNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/>
+            :  <div className="container"></div> : <div className="container"></div>
+            }
            
             {/* User icon */}
             <div style={{textAlign:"right"}}> 

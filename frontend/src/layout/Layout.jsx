@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
     useEffect(()=>{
       // DEBUG
       localStorage.setItem("logged", "yes")
-      localStorage.setItem("userType", "admin")
+      localStorage.setItem("userType", "client")
       // DEbug
       localStorage.getItem("logged") == "null" ? setLogged(false) : setLogged(true)
     },[])
