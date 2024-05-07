@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
 import Layout from './layout/Layout.jsx'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LoginPage from '../login/LoginPage.jsx'
+import AdminView from '../adminView/AdminView.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -13,14 +14,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           path="/"
           element={ // Use the Layout component as the wrapper for the App component
             <Layout>
-              <App />
+              <LoginPage/>
             </Layout>
           }
         />
          <Route
-          path="/main"
+          path="/admin"
           element={ // Use the Layout component as the wrapper for the App component
-              <App />
+            <Layout>
+                <AdminView />
+            </Layout>
           }
         />
       </Routes>

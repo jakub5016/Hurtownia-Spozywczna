@@ -1,14 +1,17 @@
 import Paper from "@mui/material/Paper"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
-import { Icon, IconButton } from "@mui/material";
+import { Button, Grid, Icon, IconButton } from "@mui/material";
+import AdminNav from "../../adminView/AdminNav";
 
 
 function Nav(props){
 
     return(
         <>
-        <Paper sx={{position:"sticky", padding:"20px", width:"90vw"}}>
+        
+        <Paper sx={{position:"sticky", padding:"20px", width:"90vw", display:"flex"}}>
+            <AdminNav/>
             {/* User icon */}
             <div style={{textAlign:"right"}}> 
                 {props.logged ? 
