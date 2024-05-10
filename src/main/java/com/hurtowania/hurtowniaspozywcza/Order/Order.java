@@ -1,5 +1,6 @@
 package com.hurtowania.hurtowniaspozywcza.Order;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hurtowania.hurtowniaspozywcza.Client.Client;
 import com.hurtowania.hurtowniaspozywcza.OrderedProduct.OrderedProduct;
 
@@ -30,7 +31,9 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnoreProperties("orders")
     private Client client;
+
 
     @OneToMany(mappedBy = "order")
     private List<OrderedProduct> orderedProducts;

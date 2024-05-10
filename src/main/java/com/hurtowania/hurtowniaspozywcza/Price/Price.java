@@ -1,5 +1,6 @@
 package com.hurtowania.hurtowniaspozywcza.Price;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hurtowania.hurtowniaspozywcza.Product.Product;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,6 +20,7 @@ public class Price {
     @Column(nullable = false)
     private double lowestFrom30Days;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(nullable = false, name = "product")
     private Product product;
