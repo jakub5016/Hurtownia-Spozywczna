@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 
@@ -25,9 +26,8 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     @Transactional
     public void addOrder(CreateOrderRequest request) {
-        //Powinno zostać zmienione po wprowadzeniu własnego systemu wyjątków
         Client client  = clientRepository.findById(request.clientId())
-                .orElseThrow(()->new HttpServerErrorException(HttpStatus.NOT_FOUND));
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
         Order order = Order.builder()
                 .client(client)
                 .orderDate(LocalDate.now())
