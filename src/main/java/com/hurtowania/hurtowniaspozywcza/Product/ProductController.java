@@ -42,7 +42,7 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @GetMapping("/product?name={name}") //to do poprawy
+    @GetMapping("/") 
     public ResponseEntity<Product> getProductByName(@RequestParam String name) {
         Product product = productService.getProductByName(name);
 

@@ -48,8 +48,8 @@ public class ClientController {
     public ResponseEntity<List<Order>> getOrdersByClientId(@PathVariable long id) {
         List<Order> orders = orderService.getOrdersByClientId(id);
 
-        if (orders == null || orders.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (orders == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return new ResponseEntity<>(orders, HttpStatus.OK);

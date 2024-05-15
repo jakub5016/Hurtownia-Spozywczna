@@ -24,7 +24,7 @@ public class Product {
     @Column(nullable = false)
     private String category;
     @OneToOne(mappedBy = "product")
-    private Price price; /* JSON ignore */
+    private Price price; 
 
     public Price getPrice() {
         return price;
