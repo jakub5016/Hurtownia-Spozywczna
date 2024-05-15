@@ -87,38 +87,4 @@ public class OrderServiceImpl implements IOrderService {
         }
         return false;
     }
-
-    @Override
-    public boolean/*Order*/ updateOrderedProducts(long orderId, List<ProductDTO> productDTOs) {
-        Order order = orderRepository.findById(orderId).orElse(null);
-    
-        if (order != null) {
-            List<OrderedProduct> orderedProducts = order.getOrderedProducts();
-    
-            // productDTOs.sort(Comparator.comparingLong(ProductDTO::getId));
-    
-            for (ProductDTO productDTO : productDTOs) {
-                for (OrderedProduct orderedProduct : orderedProducts) {
-                    if (orderedProduct.getProduct().getId() == productDTO.getOldId()) {
-                        Product newProduct = productRepository.findById(productDTO.getId()).orElse(null);
-
-                        if (newProduct != null) {
-                            orderedProduct.setProduct(newProduct);
-                            orderedProduct.setPrice(newProduct.getPrice().getPrice());
-                            orderedProduct.setQuantity(productDTO.getQuantity());
-                        } else {
-                            System.out.println("Nie znaleziono produktu o ID: " + productDTO.getId());
-                        }
-                    }
-                }
-            }
-            
-            order.setOrderedProducts(orderedProducts);
-            orderRepository.save(order);
-            
-            return true /*order*/;
-        }
-    
-        return false/*order*/;
-    }
 }

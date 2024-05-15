@@ -39,32 +39,4 @@ public class OrderController {
 
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
-
-    @PutMapping("/{id}/status")
-    public ResponseEntity<String> updateOrderStatusById(@PathVariable long id, @RequestParam("status") OrderStatus status) {
-        boolean updated = orderService.updateOrderStatusById(id, status);
-
-        if (updated) {
-            return new ResponseEntity<>("Order status updated successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Failed to update order status", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<String/*Order*/> updateOrderedProducts(@PathVariable long id, @RequestBody List<ProductDTO> orderedProductUpdates) {
-        boolean/*Order*/ updated = orderService.updateOrderedProducts(id, orderedProductUpdates);
-
-        // if (updated == null) {
-        //     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        // }
-
-        // return new ResponseEntity<>(updated, HttpStatus.OK);
-
-        if (updated) {
-            return new ResponseEntity<>("Ordered products updated successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Failed to update ordered products", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }
