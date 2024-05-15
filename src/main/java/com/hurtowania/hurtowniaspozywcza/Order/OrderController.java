@@ -2,6 +2,7 @@ package com.hurtowania.hurtowniaspozywcza.Order;
 
 import com.hurtowania.hurtowniaspozywcza.Order.requests.CreateOrderRequest;
 import com.hurtowania.hurtowniaspozywcza.OrderedProduct.OrderedProduct;
+import com.hurtowania.hurtowniaspozywcza.Product.ProductDTO;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -51,8 +52,14 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateOrderedProducts(@PathVariable long id, @RequestBody List<OrderedProductUpdateRequest> orderedProductUpdates) {
-        boolean updated = orderService.updateOrderedProducts(id, orderedProductUpdates);
+    public ResponseEntity<String/*Order*/> updateOrderedProducts(@PathVariable long id, @RequestBody List<ProductDTO> orderedProductUpdates) {
+        boolean/*Order*/ updated = orderService.updateOrderedProducts(id, orderedProductUpdates);
+
+        // if (updated == null) {
+        //     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        // }
+
+        // return new ResponseEntity<>(updated, HttpStatus.OK);
 
         if (updated) {
             return new ResponseEntity<>("Ordered products updated successfully", HttpStatus.OK);

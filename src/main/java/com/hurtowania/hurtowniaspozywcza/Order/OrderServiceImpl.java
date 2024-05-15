@@ -8,6 +8,8 @@ import com.hurtowania.hurtowniaspozywcza.OrderedProduct.IOrderedProductService;
 import com.hurtowania.hurtowniaspozywcza.OrderedProduct.OrderedProduct;
 import com.hurtowania.hurtowniaspozywcza.OrderedProduct.OrderedProductId;
 import com.hurtowania.hurtowniaspozywcza.Product.Product;
+import com.hurtowania.hurtowniaspozywcza.Product.ProductDTO;
+import com.hurtowania.hurtowniaspozywcza.Product.ProductRepository;
 import com.hurtowania.hurtowniaspozywcza.Product.IProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,9 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpServerErrorException;
 
 import java.time.LocalDate;
-import java.util.Optional;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +29,7 @@ public class OrderServiceImpl implements IOrderService {
     private final OrderRepository orderRepository;
     private final ClientRepository clientRepository;
     private final IOrderedProductService orderedProductService;
-    private IProductService productService;
+    private final ProductRepository productRepository;
 
     @Override
     @Transactional
@@ -89,30 +89,36 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public boolean updateOrderedProducts(long orderId, List<OrderedProductUpdateRequest> orderedProductUpdates) {
+    public boolean/*Order*/ updateOrderedProducts(long orderId, List<ProductDTO> productDTOs) {
         Order order = orderRepository.findById(orderId).orElse(null);
+    
         if (order != null) {
-            List<OrderedProduct> updatedOrderedProducts = new ArrayList<>();
-            for (OrderedProductUpdateRequest updateRequest : orderedProductUpdates) {
-                OrderedProduct orderedProduct = new OrderedProduct();
-                OrderedProductId orderedProductId = new OrderedProductId();
-                orderedProductId.setOrderId(orderId);
-                orderedProductId.setProductId(updateRequest.getNewProductId());
-                orderedProduct.setId(orderedProductId);
-                orderedProduct.setOrder(order);
-                Product product = productService.getProductById(updateRequest.getNewProductId());
-                if (product == null) {
-                    return false;
+            List<OrderedProduct> orderedProducts = order.getOrderedProducts();
+    
+            // productDTOs.sort(Comparator.comparingLong(ProductDTO::getId));
+    
+            for (ProductDTO productDTO : productDTOs) {
+                for (OrderedProduct orderedProduct : orderedProducts) {
+                    if (orderedProduct.getProduct().getId() == productDTO.getOldId()) {
+                        Product newProduct = productRepository.findById(productDTO.getId()).orElse(null);
+
+                        if (newProduct != null) {
+                            orderedProduct.setProduct(newProduct);
+                            orderedProduct.setPrice(newProduct.getPrice().getPrice());
+                            orderedProduct.setQuantity(productDTO.getQuantity());
+                        } else {
+                            System.out.println("Nie znaleziono produktu o ID: " + productDTO.getId());
+                        }
+                    }
                 }
-                orderedProduct.setProduct(product);
-                orderedProduct.setPrice(product.getPrice().getPrice());
-                orderedProduct.setQuantity(updateRequest.getQuantity());
-                updatedOrderedProducts.add(orderedProduct);
             }
-            order.setOrderedProducts(updatedOrderedProducts);
+            
+            order.setOrderedProducts(orderedProducts);
             orderRepository.save(order);
-            return true;
+            
+            return true /*order*/;
         }
-        return false;
+    
+        return false/*order*/;
     }
 }

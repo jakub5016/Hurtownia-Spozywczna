@@ -38,4 +38,13 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderedProduct> orderedProducts;
 
+    public OrderedProduct getOrderedProductByProductId(long productId) {
+        for (OrderedProduct orderedProduct : orderedProducts) {
+            if (orderedProduct.getProduct().getId() == productId) {
+                return orderedProduct;
+            }
+        }
+        return null; // Return null if the ordered product with the specified ID is not found
+    }
+
 }
