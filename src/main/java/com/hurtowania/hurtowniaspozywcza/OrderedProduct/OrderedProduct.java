@@ -1,5 +1,6 @@
 package com.hurtowania.hurtowniaspozywcza.OrderedProduct;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hurtowania.hurtowniaspozywcza.Order.Order;
 import com.hurtowania.hurtowniaspozywcza.Product.Product;
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ public class OrderedProduct {
     @EmbeddedId
     private OrderedProductId id;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn
     @MapsId("orderId")
