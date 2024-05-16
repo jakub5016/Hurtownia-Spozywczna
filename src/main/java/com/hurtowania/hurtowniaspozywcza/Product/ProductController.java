@@ -1,5 +1,8 @@
 package com.hurtowania.hurtowniaspozywcza.Product;
 
+import com.hurtowania.hurtowniaspozywcza.Price.requests.ReturnAllPricesDTO;
+import com.hurtowania.hurtowniaspozywcza.Price.requests.ReturnBothPriceDTO;
+import com.hurtowania.hurtowniaspozywcza.PriceLog.PriceLog;
 import com.hurtowania.hurtowniaspozywcza.Product.requests.CreateProductRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -54,16 +57,49 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/price")
-    public ResponseEntity<Double> getPriceByProductId(@PathVariable long id) {
+    public ResponseEntity<ReturnBothPriceDTO> getPriceByProductId(@PathVariable long id) {
         Product product = productService.getProductById(id);
 
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         
-        double price = product.getPrice().getPrice();
+        double currentPrice = product.getPrice().getPrice();
+        double priceFrom30Days = product.getPrice().getLowestFrom30Days();
 
-        return new ResponseEntity<>(price, HttpStatus.OK);
+        ReturnBothPriceDTO dto = ReturnBothPriceDTO.builder()
+                                                    .currentPrice(currentPrice)
+                                                    .priceFrom30Days(priceFrom30Days)
+                                                    .build();
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/price/all")
+    public ResponseEntity<ReturnAllPricesDTO> getAllPricesByProductId(@PathVariable long id) {
+        Product product = productService.getProductById(id);
+
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
+        double currentPrice = product.getPrice().getPrice();
+        double priceFrom30Days = product.getPrice().getLowestFrom30Days();
+
+        ReturnBothPriceDTO bothPrices = ReturnBothPriceDTO.builder()
+                                                    .currentPrice(currentPrice)
+                                                    .priceFrom30Days(priceFrom30Days)
+                                                    .build();
+
+
+        PriceLog logs = product.getPrice().getHistory();
+
+        ReturnAllPricesDTO dto = ReturnAllPricesDTO.builder()
+                                                    .prices(bothPrices)
+                                                    .logs(logs)
+                                                    .build();
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PutMapping("/{id}/price")

@@ -1,92 +1,46 @@
 package com.hurtowania.hurtowniaspozywcza.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.hurtowania.hurtowniaspozywcza.AppUser.AppUser;
-import com.hurtowania.hurtowniaspozywcza.AppUser.AppUserRepository;
-import com.hurtowania.hurtowniaspozywcza.AppUser.UserType;
-import com.hurtowania.hurtowniaspozywcza.AppUser.DTO.AuthAppUserResponseDTO;
 import com.hurtowania.hurtowniaspozywcza.AppUser.DTO.CreateAppUserDTO;
 import com.hurtowania.hurtowniaspozywcza.AppUser.DTO.LoginAppUserDTO;
-import com.hurtowania.hurtowniaspozywcza.Client.Client;
-import com.hurtowania.hurtowniaspozywcza.Client.ClientRepository;
 
-@Component
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+
+@RestController
+@RequestMapping("/auth")
 public class AuthController {
     @Autowired
-    AuthenticationManager authenticationManager;
+    AuthService authService;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
-    JwtUtil utils;
-
-    @Autowired
-    AppUserRepository repo;
-
-    @Autowired
-    ClientRepository clientRepository;
-
-    public ResponseEntity<?> registerUser(CreateAppUserDTO payload) {
-
-        if(repo.existsByUserName(payload.getUserName())) {
-            return ResponseEntity.badRequest().body("Username is already in use!");
-        }
-
-        AppUser user = new AppUser();
-        user.setUserName(payload.getUserName());
-        user.setPassword(passwordEncoder.encode(payload.getPassword()));
-        user.setType(UserType.CLIENT);
-        
-        Client client = new Client();
-        client.setAddress(payload.getAddress());
-        client.setName(payload.getFirstName() + payload.getSecondName());
-        
-        user.setClient(client);
-
-        repo.save(user);
-        clientRepository.save(client);
-
-        return ResponseEntity.ok().body("User registered!");
+    @PostMapping("/login")
+    public ResponseEntity<?> postMethodName(@RequestBody LoginAppUserDTO payload) {
+        return authService.authUser(payload);
     }
-
-    public ResponseEntity<?> authUser(LoginAppUserDTO payload){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                payload.getUserName(), payload.getPasswrod()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        AppUserDetails userDetail = (AppUserDetails) authentication.getPrincipal();
-        ResponseCookie jwtCookie = utils.generateJwtCookie(userDetail);
-
-        String role = userDetail.getAuthorities().iterator().next().toString();
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new AuthAppUserResponseDTO(
-                        userDetail.getId(),
-                        userDetail.getUsername(),
-                        role
-                ));
-    }
-
-    public ResponseEntity<?> logoutUser() {
-        ResponseCookie cookie = utils.getCleanJwtCookie();
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("Logged out!");
-    }
-
     
+    @GetMapping("/logout")
+    public ResponseEntity<?> getMethodName() {
+        return authService.logoutUser();
+    }
+
+    @GetMapping("/register")
+    public ResponseEntity<?> registerUser(CreateAppUserDTO dto) {
+        return authService.registerUser(dto);
+    }
+   
+    @GetMapping("/protected/user")
+    public String testUser(@CurrentSecurityContext SecurityContext context){
+        return "User " + context.getAuthentication().getName() + " " + context.getAuthentication().getAuthorities();
+    }
     
 }

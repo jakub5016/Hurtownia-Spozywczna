@@ -1,6 +1,8 @@
 package com.hurtowania.hurtowniaspozywcza.Client;
 
 import com.hurtowania.hurtowniaspozywcza.Client.requests.CreateClientRequest;
+import com.hurtowania.hurtowniaspozywcza.Client.requests.GetClientDTO;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +36,8 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Client> getClientById(@PathVariable long id) {
-        Client client = clientService.getClientById(id);
+    public ResponseEntity<GetClientDTO> getClientById(@PathVariable long id) {
+        GetClientDTO client = clientService.getClientById(id);
 
         if (client == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

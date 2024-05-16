@@ -39,4 +39,15 @@ public class OrderController {
 
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<String> updateOrderStatusById(@PathVariable long id, @RequestParam("status") OrderStatus status) {
+        boolean updated = orderService.updateOrderStatusById(id, status);
+
+        if (updated) {
+            return new ResponseEntity<>("Order status updated successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Failed to update order status", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

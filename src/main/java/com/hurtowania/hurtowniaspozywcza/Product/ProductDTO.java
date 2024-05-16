@@ -9,7 +9,4 @@ public class ProductDTO {
     private long id;
     private int Quantity;
 
-    public long getId() {
-        return id;
-    }
 }
