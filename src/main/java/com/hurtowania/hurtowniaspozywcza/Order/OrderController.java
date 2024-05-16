@@ -1,9 +1,15 @@
 package com.hurtowania.hurtowniaspozywcza.Order;
 
 import com.hurtowania.hurtowniaspozywcza.Order.requests.CreateOrderRequest;
+import com.hurtowania.hurtowniaspozywcza.OrderedProduct.OrderedProduct;
+import com.hurtowania.hurtowniaspozywcza.Product.ProductDTO;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 @RestController
 @RequestMapping("/order")
@@ -21,5 +27,16 @@ public class OrderController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteOrder(@PathVariable int id) {
         orderService.deleteOrder(id);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Order> getOrderById(@PathVariable long id) {
+        Order order = orderService.getOrderById(id);
+
+        if (order == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 }

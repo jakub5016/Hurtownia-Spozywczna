@@ -5,6 +5,9 @@ import com.hurtowania.hurtowniaspozywcza.AppUser.IAppUserService;
 import com.hurtowania.hurtowniaspozywcza.AppUser.UserType;
 import com.hurtowania.hurtowniaspozywcza.Client.requests.CreateClientRequest;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,5 +45,11 @@ public class ClientServiceImpl implements IClientService {
 
         }
 
+    }
+
+    @Override
+    public Client getClientById(long id){
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        return optionalClient.orElse(null);
     }
 }

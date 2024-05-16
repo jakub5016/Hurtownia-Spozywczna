@@ -26,6 +26,7 @@ public class Client {
     @Column(nullable = false)
     private String address;
 
+
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
 

@@ -6,6 +6,9 @@ import com.hurtowania.hurtowniaspozywcza.Product.requests.CreateProductRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {
@@ -41,6 +44,45 @@ public class ProductServiceImpl implements IProductService {
 
     }
 
+    @Override
+    public List<Product> getProduct(){
+        List<Product> product = productRepository.findAll();
+        return product;
+    }
 
+    @Override
+    public Product getProductById(long id){
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        return optionalProduct.orElse(null);
+    }
 
+    @Override
+    public Product getProductByName(String name){
+        return productRepository.findByName(name);
+    }
+
+    @Override
+    public boolean updateProductPriceById(long id, double price) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product != null) {
+            Price productPrice = product.getPrice();
+            if (productPrice != null) {
+                productPrice.setPrice(price);
+                productRepository.save(product);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateProductAmountById(long id, int amount) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product != null) {
+            product.setAvailableQuantity(amount);
+            productRepository.save(product);
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,6 +1,9 @@
 package com.hurtowania.hurtowniaspozywcza.Product;
 
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hurtowania.hurtowniaspozywcza.Price.Price;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,5 +24,9 @@ public class Product {
     @Column(nullable = false)
     private String category;
     @OneToOne(mappedBy = "product")
-    private Price price;
+    private Price price; 
+
+    public Price getPrice() {
+        return price;
+    }
 }

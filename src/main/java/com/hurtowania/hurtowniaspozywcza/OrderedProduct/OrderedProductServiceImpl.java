@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -18,13 +19,11 @@ public class OrderedProductServiceImpl implements IOrderedProductService {
 
     @Override
     public OrderedProduct createOrderedProduct(Order order, long productId, int quantity) {
-        //Powinno zostać zmienione po wprowadzeniu własnego systemu wyjątków
-        Product product = productRepository.findById(productId).orElseThrow(()->new HttpServerErrorException(HttpStatus.NOT_FOUND));
+        Product product = productRepository.findById(productId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         if(product.getAvailableQuantity() < quantity){
-            //Powinno zostać zmienione po wprowadzeniu własnego systemu wyjątków
             //Przekroczono dostępną ilosc w magazynie
-            throw new HttpServerErrorException(HttpStatus.CONFLICT);
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
 
         OrderedProduct orderedProduct = OrderedProduct.builder()

@@ -1,6 +1,9 @@
 package com.hurtowania.hurtowniaspozywcza.Price;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,5 +22,9 @@ public class PriceServiceImpl implements IPriceService{
         priceRepository.delete(price);
     }
 
-
+    @Override
+    public Price getPriceById(long id){
+        Optional<Price> optionalPrice = priceRepository.findById(id);
+        return optionalPrice.orElse(null);
+    }
 }
