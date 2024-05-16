@@ -46,11 +46,11 @@ public class AuthController {
         AppUser user = new AppUser();
         user.setUserName(payload.getUserName());
         user.setPassword(passwordEncoder.encode(payload.getPassword()));
-        user.setType(UserType.CLIENT);
+        user.setType(payload.getType());
         
         Client client = new Client();
         client.setAddress(payload.getAddress());
-        client.setName(payload.getFirstName() + payload.getSecondName());
+        client.setName(payload.getFirstName() +" "+ payload.getSecondName());
         
         user.setClient(client);
 
