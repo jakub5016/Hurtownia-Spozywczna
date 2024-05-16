@@ -25,8 +25,4 @@ public class Product {
     private String category;
     @OneToOne(mappedBy = "product")
     private Price price; 
-
-    public Price getPrice() {
-        return price;
-    }
 }

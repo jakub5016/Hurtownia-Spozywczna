@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements IProductService {
     private final ProductRepository productRepository;
     private final IPriceService priceService;
-
+    
 
     @Override
     public void addProduct(CreateProductRequest request) {
@@ -67,6 +67,9 @@ public class ProductServiceImpl implements IProductService {
         if (product != null) {
             Price productPrice = product.getPrice();
             if (productPrice != null) {
+                if (productPrice.getLowestFrom30Days() > price){
+                    productPrice.setLowestFrom30Days(price);
+                }
                 productPrice.setPrice(price);
                 productRepository.save(product);
                 return true;
