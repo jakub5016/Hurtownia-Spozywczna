@@ -1,8 +1,15 @@
 import { Button, Paper } from '@mui/material'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-function LoginPage() {
-    if (localStorage.getItem("logged") == null){
+import login from '../auth/login'
+
+
+function LoginPage(props) {
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const navigate = useNavigate();
+    props.logged ? navigate("/client") : null
+
         return (
             <div className='container'>
                 <Paper sx={{width:"40vw", padding:"2vw"}}>
@@ -15,29 +22,20 @@ function LoginPage() {
                         Nazwa użytkownika
                     </h3>
                     </label>
-                    <input type="text"/>
+                    <input type="text" onChange={(e)=>{setUsername(e.target.value)}}/>
                     <label>
                     <h3>
                         Hasło
                     </h3>
                     </label>
-                    <input type="password"/>
+                    <input type="password" onChange={(e)=>{setPassword(e.target.value)}}/>
                 </form>
-                <Button variant="contained">
+                <Button onClick={()=>{login(username, password, props.setLogged, navigate)}} variant="contained">
                     Zaloguj się
                     </Button>
                 </Paper>
             </div>
         )
-    }
-
-    else{
-        let usrType = localStorage.getItem("userType")
-        const navigate = useNavigate()
-        useEffect(()=>{
-            navigate("/" + usrType)
-        }, [])
-    }
 }
 
 export default LoginPage

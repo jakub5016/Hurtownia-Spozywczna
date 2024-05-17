@@ -62,7 +62,7 @@ public class AuthService {
 
     public ResponseEntity<?> authUser(LoginAppUserDTO payload){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                payload.getUserName(), payload.getPasswrod()));
+                payload.getUserName(), payload.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
