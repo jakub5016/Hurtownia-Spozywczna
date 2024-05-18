@@ -1,4 +1,4 @@
-async function register(username, password, firstname, secondname, adress){
+async function register(username, password, firstname, secondname, adress, setRegistered){
     await fetch("http://localhost:8080/auth/register",
         {
             method:"POST",
@@ -15,12 +15,13 @@ async function register(username, password, firstname, secondname, adress){
             }
         }
     ).then((resp)=>{
-        if (resp.status!=201){// Created
+        if (resp.status!=200){// Created
             console.log(resp.status)
             return false
         }   
         else{
             console.log("Uzytkownik stworzony")
+            setRegistered(true)
             return true;
         }
     }
