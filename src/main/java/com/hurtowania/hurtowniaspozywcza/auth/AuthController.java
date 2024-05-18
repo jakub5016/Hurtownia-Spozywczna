@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:5173/", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class AuthController {
     @Autowired
     AuthService authService;
@@ -36,8 +36,8 @@ public class AuthController {
         return authService.logoutUser();
     }
 
-    @GetMapping("/register")
-    public ResponseEntity<?> registerUser(CreateAppUserDTO dto) {
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody CreateAppUserDTO dto) {
         return authService.registerUser(dto);
     }
    

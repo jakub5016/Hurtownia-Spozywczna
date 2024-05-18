@@ -30,6 +30,7 @@ function LoginPage(props) {
                     </label>
                     <input type="password" onChange={(e)=>{setPassword(e.target.value)}}/>
                 </form>
+                <h4>Nie posiadasz jeszcze konta na naszej platformie :O ? Zarejestruj się <a href='' onClick={()=>{navigate("/register")}} style={{color:"blue"}}> tutaj </a></h4>
                 <Button onClick={()=>{login(username, password, props.setLogged, navigate)}} variant="contained">
                     Zaloguj się
                     </Button>
