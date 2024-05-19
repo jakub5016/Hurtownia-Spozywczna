@@ -12,6 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class OrderedProduct {
     @EmbeddedId
     private OrderedProductId id;
