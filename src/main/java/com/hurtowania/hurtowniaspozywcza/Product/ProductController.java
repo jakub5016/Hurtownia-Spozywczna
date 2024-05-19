@@ -23,10 +23,10 @@ public class ProductController {
         productService.addProduct(request);
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/{id}/archive")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable int id){
-        productService.deleteProduct(id);
+    public void makeArchived(@PathVariable int id){
+        productService.makeArchived(id);
     }
 
     @GetMapping

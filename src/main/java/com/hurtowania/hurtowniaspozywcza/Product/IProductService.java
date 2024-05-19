@@ -6,7 +6,8 @@ import com.hurtowania.hurtowniaspozywcza.Product.requests.CreateProductRequest;
 
 public interface IProductService {
     void addProduct(CreateProductRequest request);
-    void deleteProduct(long productId);
+    // void deleteProduct(long productId);
+    boolean makeArchived(long id);
     List<Product> getProduct();
     Product getProductById(long id);
     Product getProductByName(String name);

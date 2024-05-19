@@ -2,6 +2,7 @@ package com.hurtowania.hurtowniaspozywcza.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.hurtowania.hurtowniaspozywcza.AppUser.UserType;
 import com.hurtowania.hurtowniaspozywcza.auth.AppUserDetailsService;
 import com.hurtowania.hurtowniaspozywcza.auth.AuthEntryPoint;
 import com.hurtowania.hurtowniaspozywcza.auth.AuthTokenFilter;
@@ -58,6 +60,14 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers(HttpMethod.PUT, "/product/**/archive").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/product/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.POST, "/product/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
+                        .requestMatchers("/product/**").hasAnyAuthority("CLIENT", "ADMIN", "EMPLOYEE")
+                        
+                        .requestMatchers(HttpMethod.PUT, "/order/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
+                        .requestMatchers("/order/**").hasAnyAuthority("CLIENT", "ADMIN", "EMPLOYEE")
+                        
                         .requestMatchers("/api/protected/**").authenticated()
                         .anyRequest().permitAll()
         );

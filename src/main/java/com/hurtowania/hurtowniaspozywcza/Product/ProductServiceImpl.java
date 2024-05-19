@@ -51,14 +51,26 @@ public class ProductServiceImpl implements IProductService {
         priceService.savePrice(price);
     }
 
-    @Override
-    public void deleteProduct(long productId) {
-        Product product = productRepository.findById(productId).orElse(null);
-        if (product != null) {
-            priceService.deletePrice(product.getPrice());
-            productRepository.deleteById(productId);
-        }
+    // @Override
+    // public void deleteProduct(long productId) {
+    //     Product product = productRepository.findById(productId).orElse(null);
+    //     if (product != null) {
+    //         priceService.deletePrice(product.getPrice());
+    //         productRepository.deleteById(productId);
+    //     }
 
+    // }
+
+    @Override
+    public boolean makeArchived(long id){
+        Optional<Product> product = productRepository.findById(id);
+        if (product.get() == null){
+            return false;
+        }
+        Product productGot = product.get();
+        productGot.setArchived(true);
+        productRepository.save(productGot);
+        return true;
     }
 
     @Override

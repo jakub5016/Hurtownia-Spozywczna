@@ -2,6 +2,8 @@ package com.hurtowania.hurtowniaspozywcza.Price;
 
 import java.util.List;
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hurtowania.hurtowniaspozywcza.PriceLog.PriceLog;
 import com.hurtowania.hurtowniaspozywcza.Product.Product;
