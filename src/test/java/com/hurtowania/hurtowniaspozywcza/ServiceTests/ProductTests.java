@@ -5,6 +5,7 @@ import com.hurtowania.hurtowniaspozywcza.Price.IPriceService;
 import com.hurtowania.hurtowniaspozywcza.Price.Price;
 import com.hurtowania.hurtowniaspozywcza.Price.PriceRepository;
 import com.hurtowania.hurtowniaspozywcza.PriceLog.PriceLog;
+import com.hurtowania.hurtowniaspozywcza.PriceLog.PriceLogRepository;
 import com.hurtowania.hurtowniaspozywcza.Product.Product;
 import com.hurtowania.hurtowniaspozywcza.Product.ProductRepository;
 import com.hurtowania.hurtowniaspozywcza.Product.ProductServiceImpl;
@@ -29,6 +30,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,10 +41,13 @@ public class ProductTests {
     private ProductRepository productRepository;
     @Mock
     private IPriceService priceService;
+    @Mock
+    private PriceLogRepository priceLogRepository;
 
     @InjectMocks
     private ProductServiceImpl productService;
     private Price price;
+    private PriceLog priceLog;
 
     @BeforeEach
     public void setup(){
@@ -50,6 +55,11 @@ public class ProductTests {
                 .id(1)
                 .price(1)
                 .lowestFrom30Days(1)
+                .build();
+
+        priceLog = PriceLog.builder()
+                .prices(new ArrayList<>(Arrays.asList()))
+                .times(new ArrayList<>(Arrays.asList(LocalDate.now())))
                 .build();
     }
 
@@ -64,6 +74,7 @@ public class ProductTests {
 
         CreateProductRequest request = new CreateProductRequest(1, null, null, 1);
         when(priceService.savePrice(any(Price.class))).thenReturn(price);
+        when(priceLogRepository.save(any(PriceLog.class))).thenReturn(priceLog);
         when(productRepository.save(Mockito.any(Product.class))).thenReturn(product);
 
         productService.addProduct(request);
