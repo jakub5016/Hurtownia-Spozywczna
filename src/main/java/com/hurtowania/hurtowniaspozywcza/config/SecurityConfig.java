@@ -60,14 +60,21 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.PUT, "/product/**/archive").hasAnyAuthority("ADMIN")
+                        // .requestMatchers(HttpMethod.PUT, "/product/**/archive").hasAnyAuthority("ADMIN") // Solve later
                         .requestMatchers(HttpMethod.PUT, "/product/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
                         .requestMatchers(HttpMethod.POST, "/product/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
                         .requestMatchers("/product/**").hasAnyAuthority("CLIENT", "ADMIN", "EMPLOYEE")
                         
                         .requestMatchers(HttpMethod.PUT, "/order/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.DELETE, "/order/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
                         .requestMatchers("/order/**").hasAnyAuthority("CLIENT", "ADMIN", "EMPLOYEE")
                         
+                        // .requestMatchers(HttpMethod.GET, "/client/**/order").hasAnyAuthority("ADMIN", "EMPLOYEE") // Solve later
+                        .requestMatchers(HttpMethod.GET, "/client/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.POST, "/client/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/client/**").hasAnyAuthority("ADMIN")
+
+
                         .requestMatchers("/api/protected/**").authenticated()
                         .anyRequest().permitAll()
         );

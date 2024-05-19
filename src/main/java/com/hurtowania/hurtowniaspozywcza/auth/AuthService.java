@@ -62,11 +62,7 @@ public class AuthService {
         LoginAppUserDTO dto = LoginAppUserDTO.builder().userName(payload.getUserName()).password(payload.getPassword()).build();
 
         ResponseEntity<?> loginResponse = authUser(dto);
-        
-        if (loginResponse.getStatusCode() == HttpStatusCode.valueOf(200)){
-            return ResponseEntity.ok().body("User registered and logged!");
-        }
-        
+
         return loginResponse;
     }
 

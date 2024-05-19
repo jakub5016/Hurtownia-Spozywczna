@@ -30,6 +30,7 @@ public class Price {
     @JoinColumn(nullable = false, name = "product")
     private Product product;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(nullable = false,  name = "history")
     private PriceLog history;
