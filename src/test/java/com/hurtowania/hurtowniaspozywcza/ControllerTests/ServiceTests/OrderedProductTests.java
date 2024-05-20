@@ -58,7 +58,7 @@ public class OrderedProductTests {
         when(orderedProductRepository.save(orderedProduct)).thenReturn(orderedProduct);
 
         OrderedProduct tmp = orderedProductService.createOrderedProduct(order, 1,5);
-
+        
         assertEquals(orderedProduct, tmp);
     }
 

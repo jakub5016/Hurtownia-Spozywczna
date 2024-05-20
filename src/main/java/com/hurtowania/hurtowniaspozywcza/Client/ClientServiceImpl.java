@@ -4,7 +4,12 @@ import com.hurtowania.hurtowniaspozywcza.AppUser.AppUser;
 import com.hurtowania.hurtowniaspozywcza.AppUser.IAppUserService;
 import com.hurtowania.hurtowniaspozywcza.AppUser.UserType;
 import com.hurtowania.hurtowniaspozywcza.Client.requests.CreateClientRequest;
+import com.hurtowania.hurtowniaspozywcza.Client.requests.GetClientDTO;
+
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,5 +47,21 @@ public class ClientServiceImpl implements IClientService {
 
         }
 
+    }
+
+    @Override
+    public GetClientDTO getClientById(long id){
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        Client clientGot = optionalClient.orElse(null);
+        if (clientGot == null){
+            return null;
+        }
+        GetClientDTO dto = GetClientDTO.builder()
+                                        .id(clientGot.getId())
+                                        .name(clientGot.getName())
+                                        .address(clientGot.getAddress())
+                                        .build();
+                                        
+        return dto;
     }
 }

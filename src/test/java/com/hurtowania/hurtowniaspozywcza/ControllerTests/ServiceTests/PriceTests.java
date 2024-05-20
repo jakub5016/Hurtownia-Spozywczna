@@ -11,7 +11,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class PriceTests {
@@ -36,5 +39,27 @@ public class PriceTests {
         Price tmp = priceRepository.save(price);
 
         assertEquals(price,tmp);
+    }
+
+        @Test
+    void getPriceById_NotFound() {
+    long id = 1L;
+
+    when(priceRepository.findById(id)).thenReturn(Optional.empty());
+
+    Price retrievedPrice = priceService.getPriceById(id);
+
+    assertNull(retrievedPrice);
+    }
+
+    @Test
+    void getPriceById_Success() {
+    long priceId = 1L;
+
+    when(priceRepository.findById(priceId)).thenReturn(Optional.of(price));
+
+    Price retrievedPrice = priceService.getPriceById(priceId);
+
+    assertEquals(price, retrievedPrice);
     }
 }
