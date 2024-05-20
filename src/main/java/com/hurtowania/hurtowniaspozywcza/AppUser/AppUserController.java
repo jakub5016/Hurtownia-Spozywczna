@@ -26,7 +26,7 @@ public class AppUserController {
     IClientService clientService;
 
     @GetMapping("")
-    public ResponseEntity<?> getMethodName(@CurrentSecurityContext SecurityContext context) {
+    public ResponseEntity<?> getUserDetails(@CurrentSecurityContext SecurityContext context) {
         if (context.getAuthentication().getPrincipal() == "anonymousUser"){
             return new ResponseEntity<>("You are not logged in, can't check yout user info", HttpStatus.UNAUTHORIZED);
         }
