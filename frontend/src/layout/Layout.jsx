@@ -4,10 +4,16 @@ import Nav from './Nav.jsx';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, logged, setLogged, userType, selectedSite, setSelectedSite }) => {
+  console.log(userType)
     return (
       <div>
-          <Nav selectedSite={children.props.selectedSite} setSelectedSite={children.props.setSelectedSite} logged={children.props.logged} setLogged={children.props.setLogged}/>
+          <Nav 
+            selectedSite={selectedSite} 
+            setSelectedSite={setSelectedSite} 
+            logged={logged} 
+            setLogged={setLogged} 
+            userType={userType}/>
         {children}
       </div>
     );

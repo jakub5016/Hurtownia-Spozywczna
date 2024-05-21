@@ -12,7 +12,8 @@ async function register(username, password, firstname, secondname, adress, setRe
             }),
             headers:{
                 "Content-Type" : "application/json"
-            }
+            },
+            credentials: "include"
         }
     ).then((resp)=>{
         if (resp.status!=200){// Created

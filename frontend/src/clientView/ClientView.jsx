@@ -4,7 +4,7 @@ import ProductTable from "../adminView/productDatabase/PoductTable"
 function ClientView(props){
 
     return(
-        localStorage.getItem("logged") != "null" && localStorage.getItem("userType") == 'client' ?
+        props.logged && props.userType=="CLIENT" ?
         <div className="container">
         {props.selectedSite == 1 ? <OrderTable/> : <ProductTable/>}
         </div> : null

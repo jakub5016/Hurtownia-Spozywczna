@@ -8,7 +8,7 @@ function LoginPage(props) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
-    props.logged ? navigate("/client") : null
+    // props.logged ? navigate("/client") : null
 
         return (
             <div className='container'>

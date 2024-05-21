@@ -2,7 +2,6 @@ import { Button, Grid } from "@mui/material"
 
 function ClientNav(props){
     return(
-        localStorage.getItem("logged") != "null" && localStorage.getItem("userType") == 'client' ? 
         <Grid  container
         direction="row"
         justifyContent="flex-start"
@@ -18,7 +17,7 @@ function ClientNav(props){
                     Lista produktów
                 </Button>
             </Grid>
-        </Grid> : null
+        </Grid>
     )
 }
 

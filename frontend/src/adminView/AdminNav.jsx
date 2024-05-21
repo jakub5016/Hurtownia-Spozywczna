@@ -1,9 +1,7 @@
 import { Button, Grid } from "@mui/material"
 
 function AdminNav(props){
-    console.log(props)
     return(
-        localStorage.getItem("logged") != "null" && localStorage.getItem("userType") == 'admin' ?
         <Grid  container
         direction="row"
         justifyContent="flex-start"
@@ -25,7 +23,7 @@ function AdminNav(props){
                     Zamówienia
                 </Button>
             </Grid>
-        </Grid> : null
+        </Grid>
     )
 }
 

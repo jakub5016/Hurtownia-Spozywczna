@@ -22,7 +22,8 @@ async function login(login, password, setLogged, navigate){
         else{
             setLogged("true")
             console.log(resp.body)
-            navigate("/client")
+            navigate("/")
+            window.location.reload()
         }
         
     }).catch(err=>{

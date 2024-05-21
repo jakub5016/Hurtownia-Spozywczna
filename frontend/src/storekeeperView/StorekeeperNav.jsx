@@ -2,7 +2,6 @@ import { Button, Grid } from "@mui/material"
 
 function StorekeeperNav(props){
     return(
-        localStorage.getItem("logged") != "null" && localStorage.getItem("userType") == 'storekeeper' ? 
         <Grid  container
         direction="row"
         justifyContent="flex-start"
@@ -24,7 +23,7 @@ function StorekeeperNav(props){
                     Lista Produktów
                 </Button>
             </Grid>
-        </Grid> : null
+        </Grid> 
     )
 }
 
