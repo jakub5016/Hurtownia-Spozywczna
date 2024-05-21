@@ -1,6 +1,8 @@
 package com.hurtowania.hurtowniaspozywcza.AppUser;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +32,16 @@ public class AppUserService {
         userRepo.save(appUser);
         clientRepo.save(client);
         return "New user succesfully created";
+    }
+
+    public AppUser findByUserName(String username){
+        if (userRepo.findByUserName(username).size() > 0){
+            return (userRepo.findByUserName(username)).get(0);
+
+        }
+        else{
+            return null;
+        }
     }
 
 

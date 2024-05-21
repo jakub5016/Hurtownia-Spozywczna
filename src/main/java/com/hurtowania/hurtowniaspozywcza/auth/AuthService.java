@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +47,7 @@ public class AuthService {
         AppUser user = new AppUser();
         user.setUserName(payload.getUserName());
         user.setPassword(passwordEncoder.encode(payload.getPassword()));
-        user.setType(UserType.CLIENT);
+        user.setType(payload.getType());
         
         Client client = new Client();
         client.setAddress(payload.getAddress());
@@ -57,12 +58,17 @@ public class AuthService {
         repo.save(user);
         clientRepository.save(client);
 
-        return ResponseEntity.ok().body("User registered!");
+        // Auto login 
+        LoginAppUserDTO dto = LoginAppUserDTO.builder().userName(payload.getUserName()).password(payload.getPassword()).build();
+
+        ResponseEntity<?> loginResponse = authUser(dto);
+
+        return loginResponse;
     }
 
     public ResponseEntity<?> authUser(LoginAppUserDTO payload){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                payload.getUserName(), payload.getPasswrod()));
+                payload.getUserName(), payload.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
