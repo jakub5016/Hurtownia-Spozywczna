@@ -30,7 +30,7 @@ function Nav(props){
                     <IconButton>
                         <AccountCircleIcon sx={{fontSize:"40px"}}/>
                     </IconButton>
-                    <IconButton onClick={()=>{logout();navigate("/");window.location.reload()}}>
+                    <IconButton onClick={()=>{logout(navigate)}}>
                         <ExitToAppIcon sx={{fontSize:"40px"}}/>
                     </IconButton>
                     </div>

@@ -1,4 +1,4 @@
-async function logout(){
+async function logout(navigate){
     await fetch('http://localhost:8080/auth/logout', {method:"GET", credentials:"include"})
     .then(resp=>{
         if (!resp.ok){
@@ -6,6 +6,8 @@ async function logout(){
         }
         else{
             console.log(resp)
+            navigate("/")
+            window.location.reload()
         }
     })
     .catch(err=>{
