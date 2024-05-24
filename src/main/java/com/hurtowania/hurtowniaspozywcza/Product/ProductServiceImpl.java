@@ -99,7 +99,7 @@ public class ProductServiceImpl implements IProductService {
                 
                 productPrice.getHistory().getPrices().add(price);
                 productPrice.getHistory().getTimes().add(LocalDate.now());
-                List<LocalDate> historyTimes= productPrice.getHistory().getTimes();
+                List<LocalDate> historyTimes = productPrice.getHistory().getTimes();
                 List<Double> historyPrices = productPrice.getHistory().getPrices();
 
                 LocalDate today = LocalDate.now();
@@ -117,12 +117,15 @@ public class ProductServiceImpl implements IProductService {
                     }
                 }
 
-                if (minPriceInLast30Days == Double.MAX_VALUE){
+                if (minPriceInLast30Days == Double.MAX_VALUE) {
                     minPriceInLast30Days = price;
                 }
                 
                 productPrice.setLowestFrom30Days(minPriceInLast30Days);
                 productPrice.setPrice(price);
+
+                priceService.savePrice(productPrice);
+
                 productRepository.save(product);
                 return true;
             }
