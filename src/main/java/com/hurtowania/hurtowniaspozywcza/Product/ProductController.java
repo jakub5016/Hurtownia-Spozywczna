@@ -4,7 +4,11 @@ import com.hurtowania.hurtowniaspozywcza.Price.requests.ReturnAllPricesDTO;
 import com.hurtowania.hurtowniaspozywcza.Price.requests.ReturnBothPriceDTO;
 import com.hurtowania.hurtowniaspozywcza.PriceLog.PriceLog;
 import com.hurtowania.hurtowniaspozywcza.Product.requests.CreateProductRequest;
+import com.hurtowania.hurtowniaspozywcza.Product.requests.GetAllProductsPage;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +34,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getProduct(){
-        return productService.getProduct();
+    public ResponseEntity<GetAllProductsPage> getProduct(@RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize){
+        return ResponseEntity.ok(productService.getProduct(pageNo, pageSize));
     }
 
     @GetMapping("/{id}")

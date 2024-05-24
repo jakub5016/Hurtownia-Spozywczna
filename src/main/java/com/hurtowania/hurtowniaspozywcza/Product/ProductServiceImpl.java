@@ -5,7 +5,13 @@ import com.hurtowania.hurtowniaspozywcza.Price.Price;
 import com.hurtowania.hurtowniaspozywcza.PriceLog.PriceLog;
 import com.hurtowania.hurtowniaspozywcza.PriceLog.PriceLogRepository;
 import com.hurtowania.hurtowniaspozywcza.Product.requests.CreateProductRequest;
+import com.hurtowania.hurtowniaspozywcza.Product.requests.GetAllProductsPage;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -74,9 +80,12 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<Product> getProduct(){
-        List<Product> product = productRepository.findAll();
-        return product;
+    public GetAllProductsPage getProduct(int pageNo, int pageSize){
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Product> page = productRepository.findAll(pageable);
+        long pagesNumber = page.getTotalElements();
+
+        return GetAllProductsPage.builder().page(page).pagesNumber(pagesNumber).build();
     }
 
     @Override

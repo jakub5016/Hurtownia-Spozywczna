@@ -10,6 +10,8 @@ import com.hurtowania.hurtowniaspozywcza.Product.Product;
 import com.hurtowania.hurtowniaspozywcza.Product.ProductRepository;
 import com.hurtowania.hurtowniaspozywcza.Product.ProductServiceImpl;
 import com.hurtowania.hurtowniaspozywcza.Product.requests.CreateProductRequest;
+import com.hurtowania.hurtowniaspozywcza.Product.requests.GetAllProductsPage;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +19,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -87,28 +92,28 @@ public class ProductTests {
         Product.builder().id(2L).name("Product 2").build()
     );
 
-    when(productRepository.findAll()).thenReturn(expectedProducts);
+    when(productRepository.findAll(PageRequest.of(0, 10))).thenReturn(new PageImpl<>(expectedProducts));
 
-    List<Product> retrievedProducts = productService.getProduct();
+    GetAllProductsPage retrievedProducts = productService.getProduct(0, 10);
 
     assertNotNull(retrievedProducts);
-    assertEquals(expectedProducts.size(), retrievedProducts.size());
+    assertEquals(expectedProducts.size(), retrievedProducts.getPage().getNumberOfElements());
 
-    for (int i = 0; i < retrievedProducts.size(); i++) {
-        assertEquals(expectedProducts.get(i).getId(), retrievedProducts.get(i).getId());
-        assertEquals(expectedProducts.get(i).getName(), retrievedProducts.get(i).getName());
+    for (int i = 0; i < retrievedProducts.getPage().getNumberOfElements(); i++) {
+        assertEquals(expectedProducts.get(i).getId(), retrievedProducts.getPage().getContent().get(i).getId());
+        assertEquals(expectedProducts.get(i).getName(), retrievedProducts.getPage().getContent().get(i).getName());
         }
     }
 
     @Test
     public void getProduct_Success_NoProductsExist() {
 
-    when(productRepository.findAll()).thenReturn(Collections.emptyList());
+    when(productRepository.findAll(PageRequest.of(0, 10))).thenReturn(new PageImpl<>(Collections.emptyList()));
     
-    List<Product> retrievedProducts = productService.getProduct();
+    GetAllProductsPage retrievedProducts = productService.getProduct(0, 10);
     
-    assertNotNull(retrievedProducts);
-    assertTrue(retrievedProducts.isEmpty());
+    assertNotNull(retrievedProducts.getPage().getContent());
+    assertTrue(retrievedProducts.getPage().getContent().isEmpty());
     }
 
     @Test
