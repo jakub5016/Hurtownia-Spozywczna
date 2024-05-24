@@ -69,9 +69,6 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public Order getOrderById(long id){
         Optional<Order> optionalOrder = orderRepository.findById(id);
-        if (optionalOrder.get() == null){
-            return null;
-        }
 
         return optionalOrder.orElse(null);
     }
