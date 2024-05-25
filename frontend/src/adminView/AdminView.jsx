@@ -10,7 +10,7 @@ function AdminView(props)
     return(
     props.logged && props.userType=="ADMIN" ?
     <div className="container">
-        {props.selectedSite == 1 ? <ProductTable/> : props.selectedSite == 2? <ClientTable/> : <OrderTable/>}
+        {props.selectedSite == 1 ? <ProductTable userType="ADMIN"/> : props.selectedSite == 2? <ClientTable userType="ADMIN"/> : <OrderTable userType="ADMIN"/>}
     </div> : null
     )
 }

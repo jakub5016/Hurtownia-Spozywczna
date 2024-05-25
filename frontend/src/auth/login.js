@@ -3,7 +3,7 @@ async function login(login, password, setLogged, navigate){
     await fetch("http://localhost:8080/auth/login", {
         method:"POST", 
         credentials: "include", 
-        body:JSON.stringify({"userName": "string", "password": "string"}),
+        body:JSON.stringify({"userName": login, "password": password}),
         headers:{
             "accept": '*/*',
             'Content-Type' : 'application/json'
