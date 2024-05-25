@@ -5,7 +5,6 @@ import com.hurtowania.hurtowniaspozywcza.Price.Price;
 import com.hurtowania.hurtowniaspozywcza.PriceLog.PriceLog;
 import com.hurtowania.hurtowniaspozywcza.PriceLog.PriceLogRepository;
 import com.hurtowania.hurtowniaspozywcza.Product.requests.CreateProductRequest;
-import com.hurtowania.hurtowniaspozywcza.Product.requests.GetAllProductsPage;
 
 import lombok.RequiredArgsConstructor;
 
@@ -80,12 +79,10 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public GetAllProductsPage getProduct(int pageNo, int pageSize){
+    public Page<Product> getProduct(int pageNo, int pageSize){
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Product> page = productRepository.findAll(pageable);
-        long pagesNumber = page.getTotalElements();
-
-        return GetAllProductsPage.builder().page(page).pagesNumber(pagesNumber).build();
+        return page;
     }
 
     @Override

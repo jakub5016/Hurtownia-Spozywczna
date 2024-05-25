@@ -10,7 +10,6 @@ import com.hurtowania.hurtowniaspozywcza.Product.Product;
 import com.hurtowania.hurtowniaspozywcza.Product.ProductRepository;
 import com.hurtowania.hurtowniaspozywcza.Product.ProductServiceImpl;
 import com.hurtowania.hurtowniaspozywcza.Product.requests.CreateProductRequest;
-import com.hurtowania.hurtowniaspozywcza.Product.requests.GetAllProductsPage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,14 +93,14 @@ public class ProductTests {
 
     when(productRepository.findAll(PageRequest.of(0, 10))).thenReturn(new PageImpl<>(expectedProducts));
 
-    GetAllProductsPage retrievedProducts = productService.getProduct(0, 10);
+    Page<Product> retrievedProducts = productService.getProduct(0, 10);
 
     assertNotNull(retrievedProducts);
-    assertEquals(expectedProducts.size(), retrievedProducts.getPage().getNumberOfElements());
+    assertEquals(expectedProducts.size(), retrievedProducts.getNumberOfElements());
 
-    for (int i = 0; i < retrievedProducts.getPage().getNumberOfElements(); i++) {
-        assertEquals(expectedProducts.get(i).getId(), retrievedProducts.getPage().getContent().get(i).getId());
-        assertEquals(expectedProducts.get(i).getName(), retrievedProducts.getPage().getContent().get(i).getName());
+    for (int i = 0; i < retrievedProducts.getNumberOfElements(); i++) {
+        assertEquals(expectedProducts.get(i).getId(), retrievedProducts.getContent().get(i).getId());
+        assertEquals(expectedProducts.get(i).getName(), retrievedProducts.getContent().get(i).getName());
         }
     }
 
@@ -110,10 +109,10 @@ public class ProductTests {
 
     when(productRepository.findAll(PageRequest.of(0, 10))).thenReturn(new PageImpl<>(Collections.emptyList()));
     
-    GetAllProductsPage retrievedProducts = productService.getProduct(0, 10);
+    Page<Product> retrievedProducts = productService.getProduct(0, 10);
     
-    assertNotNull(retrievedProducts.getPage().getContent());
-    assertTrue(retrievedProducts.getPage().getContent().isEmpty());
+    assertNotNull(retrievedProducts.getContent());
+    assertTrue(retrievedProducts.getContent().isEmpty());
     }
 
     @Test

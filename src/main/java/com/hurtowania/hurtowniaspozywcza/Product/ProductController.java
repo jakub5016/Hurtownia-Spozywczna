@@ -4,7 +4,6 @@ import com.hurtowania.hurtowniaspozywcza.Price.requests.ReturnAllPricesDTO;
 import com.hurtowania.hurtowniaspozywcza.Price.requests.ReturnBothPriceDTO;
 import com.hurtowania.hurtowniaspozywcza.PriceLog.PriceLog;
 import com.hurtowania.hurtowniaspozywcza.Product.requests.CreateProductRequest;
-import com.hurtowania.hurtowniaspozywcza.Product.requests.GetAllProductsPage;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class ProductController {
     private final IProductService productService;
 
@@ -34,7 +34,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<GetAllProductsPage> getProduct(@RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize){
+    public ResponseEntity<Page<Product>> getProduct(@RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize){
         return ResponseEntity.ok(productService.getProduct(pageNo, pageSize));
     }
 
