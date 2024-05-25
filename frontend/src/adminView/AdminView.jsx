@@ -1,18 +1,29 @@
-import { Paper, Table, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
-import ProductTable from "./productDatabase/PoductTable"
-import { useState } from "react"
-import ClientTable from "./clientDatabse/ClientTable"
-import OrderTable from "./orderDatabase/OrderTable"
+import {
+  Paper,
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import ProductTable from "./productDatabase/PoductTable";
+import { useState } from "react";
+import ClientTable from "./clientDatabse/ClientTable";
+import OrderTable from "./orderDatabase/OrderTable";
 
-function AdminView(props)
-{   
-    console.log(props.selectedSite)
-    return(
-    props.logged && props.userType=="ADMIN" ?
+function AdminView(props) {
+  console.log(props.selectedSite);
+  return props.logged && props.userType == "ADMIN" ? (
     <div className="container">
-        {props.selectedSite == 1 ? <ProductTable userType="ADMIN"/> : props.selectedSite == 2? <ClientTable userType="ADMIN"/> : <OrderTable userType="ADMIN"/>}
-    </div> : null
-    )
+      {props.selectedSite == 1 ? (
+        <ProductTable userType="ADMIN" />
+      ) : props.selectedSite == 2 ? (
+        <ClientTable userType="ADMIN" />
+      ) : (
+        <OrderTable userType="ADMIN" />
+      )}
+    </div>
+  ) : null;
 }
 
-export default AdminView
+export default AdminView;

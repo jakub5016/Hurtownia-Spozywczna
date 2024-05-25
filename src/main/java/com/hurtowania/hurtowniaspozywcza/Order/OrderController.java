@@ -14,6 +14,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class OrderController {
     private final IOrderService orderService;
 
