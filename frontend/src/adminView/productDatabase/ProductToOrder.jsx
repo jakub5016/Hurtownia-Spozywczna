@@ -1,6 +1,7 @@
 import { Button, InputAdornment, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
+import createOrder from "../orderDatabase/createOrder";
 
 const WhiteBackgroundTextField = styled(TextField)({
   '& .MuiInputBase-root': {
@@ -118,7 +119,13 @@ function ProductToOrder(props) {
         </TableBody>
       </Table>
       <div style={{ marginTop: "20px" }}>
-        <Button sx={{ backgroundColor: "white", "&:hover": { backgroundColor: "white !important" } }} variant="outlined">
+        <Button 
+            sx={{ backgroundColor: "white", "&:hover": { backgroundColor: "white !important" } }} 
+            variant="outlined"
+            onClick={()=>{
+              createOrder(props.products.map((element)=>{return element.id}), ammoutArray).then(alert("Zamówienie zostało dodane"))
+            }}
+          >
           Dodaj nowe zamówienie
         </Button>
       </div>
