@@ -22,7 +22,7 @@ function StorekeeperNav(props){
             </Grid>
 
             <Grid  item xs={1}>
-                <Button variant="outlined" onClick={()=>{props.setSelectedSite(1);navigate("/storekeeper")}}>
+                <Button variant="outlined" onClick={()=>{props.setSelectedSite(3);navigate("/storekeeper")}}>
                     Lista Produktów
                 </Button>
             </Grid>

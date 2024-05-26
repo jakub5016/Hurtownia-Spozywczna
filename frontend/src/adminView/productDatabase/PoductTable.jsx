@@ -20,7 +20,7 @@ function ProductTable(props) {
   const [products, setProducts] = useState({ content: [] });
   const [open, setOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
-
+  console.log("AA")
 //   const [productDTO, setPoroductDTO] = useState({price: 0, name:"string", category:"category", quantity:"0"})
   const [newProductPrice, setNewProductPrice] = useState(0)
   const [newProductName, setNewProductName] = useState("")

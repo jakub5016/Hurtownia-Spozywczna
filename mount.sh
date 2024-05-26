@@ -27,6 +27,18 @@ curl -X 'POST' \
   "address": "string"
 }'
 
+curl -c /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/auth/register' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "userName": "emp",
+  "firstName": "string",
+  "secondName": "string",
+  "password": "string",
+  "type": "EMPLOYEE",
+  "address": "string"
+}'
 
 #Addin products
 curl -b /tmp/cookies.txt -X 'POST' \

@@ -16,7 +16,7 @@ function Nav(props){
             {props.logged ?
             props.userType == "ADMIN" ?
             <AdminNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/> :  
-            props.userType == "EMPLOYEE "  ? 
+            props.userType == "EMPLOYEE"  ? 
             <StorekeeperNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/>: 
             props.userType == "CLIENT"  ? 
             <ClientNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/>
