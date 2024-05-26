@@ -14,14 +14,60 @@ import { useEffect, useState } from "react";
 import getProducts from "./getProducts";
 import addProduct from "./addProduct";
 import ProductToOrder from "./ProductToOrder";
+import EditProductDialog from "./EditProductDialog";
+
+
+function UserProductView(product, setAddedProducts, addedProducts){
+  return(
+  <TableRow key={product.id}>
+    <TableCell align="left">{product.name}</TableCell>
+    <TableCell align="right">
+      {product.availableQuantity}
+    </TableCell>
+    <TableCell align="right">{product.category}</TableCell>
+    <TableCell align="right">
+      {product.price.lowestFrom30Days}
+    </TableCell>
+    <TableCell align="right">{product.price.price}</TableCell>
+    <TableCell align="right">
+          <Button sx={{borderRadius:"80vw"}} variant="contained" onClick={()=>{
+              setAddedProducts(addedProducts.concat(product))
+          }}>+</Button>
+      </TableCell>
+  </TableRow>
+  )
+}
+
+
+function AdminProductView(product, setOpenEdit, setNewProductQuantity, setNewProductPrice){
+  return(
+  <TableRow key={product.id}>
+    <TableCell align="left">{product.name}</TableCell>
+    <TableCell align="right">
+      {product.availableQuantity}
+    </TableCell>
+    <TableCell align="right">{product.category}</TableCell>
+    <TableCell align="right">
+      {product.price.lowestFrom30Days}
+    </TableCell>
+    <TableCell align="right">{product.price.price}</TableCell>
+    <TableCell align="right">
+          <Button sx={{borderRadius:"80vw", fontSize:"12px"}} variant="contained" onClick={()=>{
+              setNewProductQuantity(product.availableQuantity)
+              setNewProductPrice(product.price.price)
+              setOpenEdit(true)
+          }}>Edytuj</Button>
+      </TableCell>
+  </TableRow>
+  )
+}
 
 
 function ProductTable(props) {
   const [products, setProducts] = useState({ content: [] });
   const [open, setOpen] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
-  console.log("AA")
-//   const [productDTO, setPoroductDTO] = useState({price: 0, name:"string", category:"category", quantity:"0"})
   const [newProductPrice, setNewProductPrice] = useState(0)
   const [newProductName, setNewProductName] = useState("")
   const [newProductCategory, setNewProductCategory] = useState("")
@@ -44,6 +90,7 @@ function ProductTable(props) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
+      <EditProductDialog open={openEdit} setOpen={setOpenEdit} price={newProductPrice} quantity={newProductQuantity}/>
       {addedProducts.length!= 0 && <ProductToOrder products={addedProducts} setAddedProducts={setAddedProducts}/>}
 
       <TableContainer component={Paper} sx={{margin:"1vw", padding: "1vw", width: "80vw" }}>
@@ -70,24 +117,12 @@ function ProductTable(props) {
           <TableBody>
             {products.content.map((product) => {
               if (!addedProducts.some(p => p.id === product.id)){
-                return (
-                  <TableRow key={product.id}>
-                    <TableCell align="left">{product.name}</TableCell>
-                    <TableCell align="right">
-                      {product.availableQuantity}
-                    </TableCell>
-                    <TableCell align="right">{product.category}</TableCell>
-                    <TableCell align="right">
-                      {product.price.lowestFrom30Days}
-                    </TableCell>
-                    <TableCell align="right">{product.price.price}</TableCell>
-                    <TableCell align="right">
-                          <Button sx={{borderRadius:"80vw"}} variant="contained" onClick={()=>{
-                              setAddedProducts(addedProducts.concat(product))
-                          }}>+</Button>
-                      </TableCell>
-                  </TableRow>
-                );
+                if (props.userType == "USER"){
+                  return (UserProductView(product, setAddedProducts, addedProducts));
+                }
+                else{
+                  return (AdminProductView(product, setOpenEdit, setNewProductQuantity, setNewProductPrice));
+                }
               }
             })}
           </TableBody>
