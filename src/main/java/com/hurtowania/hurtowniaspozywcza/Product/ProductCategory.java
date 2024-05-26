@@ -1,0 +1,57 @@
+package com.hurtowania.hurtowniaspozywcza.Product;
+
+public enum ProductCategory {
+    // Artykuły spożywcze
+    WARZYWA_I_OWOCE,
+    PIECZYWO,
+    NABIAL, // mleko, sery, jogurty
+    MIESO_I_WEDLINY,
+    RYBY_I_OWOCE_MORZA,
+    MROZONKI,
+    KONSERWY,
+    PRODUKTY_SYPKIE, // mąka, cukier, ryż, makaron
+    PRZYPRAWY_I_ZIOLA,
+    SLODYCZE_I_PRZEKASKI,
+    NAPOJE_BEZALKOHOLOWE,
+    NAPOJE_ALKOHOLOWE,
+    OLEJE_I_TLUSZCZE,
+    PRODUKTY_DIETETYCZNE_I_EKOLOGICZNE,
+    PRODUKTY_BEZGLUTENOWE,
+    KAWA_HERBATA_I_KAKAO,
+    SOSY_I_DRESSINGI,
+    PRZETWORY_OWOCOWE_I_WARZYWNE, // dżemy, ogórki kiszone
+    PIECZYWO_CHRUPKIE_I_SUCHARKI,
+    ZUPY_INSTANT_I_DANIA_GOTOWE,
+    PLATKI_SNIADANIOWE_I_MUSLI,
+    PRODUKTY_DLA_DZIECI, // kaszki, deserki
+    PRZEKASKI_NA_WYNOS, // batony energetyczne, orzechy
+    ARTYKULY_CUKIERNICZE, // ciasta, ciastka
+    ARTYKULY_SNIADANIOWE, // kanapki, pasty
+
+    // Artykuły budowlane
+    SRUBY,
+    NAKRETKI,
+    PODKLADKI,
+    KRZYZAKI_DO_GLAZURY,
+    WKRETY,
+    KOLKI_ROZPOROWE,
+    GWOZDZIE,
+    NITY,
+    KLEJE_I_SILIKONY,
+    TASMY_BUDOWLANE,
+    NARZEDZIA_RECZNE, // młotki, klucze, śrubokręty
+    NARZEDZIA_ELEKTRYCZNE, // wiertarki, szlifierki
+    DRABINY_I_RUSZTOWANIA,
+    MATERIALY_IZOLACYJNE, // pianki, maty
+    USZCZELKI_I_PROFILE,
+    FARBY_I_LAKIERY,
+    WALKI_I_PEDZLE_MALARSKIE,
+    OSWIETLENIE, // żarówki, reflektory
+    AKCESORIA_ELEKTRYCZNE, // gniazda, włączniki
+    PRZEDLUZACZE_I_LISTWY_ZASILAJACE,
+    RURY_I_ZLACZKI_HYDRAULICZNE,
+    KRANY_I_BATERIE_LAZIENKOWE,
+    WENTYLATORY_I_KLIMATYZATORY,
+    PANELE_PODLOGOWE_I_LISTWY_PRZYPODLOGOWE,
+    MATERIALY_WYKONCZENIOWE // gładzie, tynki
+}
