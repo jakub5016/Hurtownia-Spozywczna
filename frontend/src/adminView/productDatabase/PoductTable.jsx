@@ -13,6 +13,8 @@ import {
 import { useEffect, useState } from "react";
 import getProducts from "./getProducts";
 import addProduct from "./addProduct";
+import ProductToOrder from "./ProductToOrder";
+
 
 function ProductTable(props) {
   const [products, setProducts] = useState({ content: [] });
@@ -24,6 +26,7 @@ function ProductTable(props) {
   const [newProductName, setNewProductName] = useState("")
   const [newProductCategory, setNewProductCategory] = useState("")
   const [newProductQuantity, setNewProductQuantity] = useState(0)
+  const [addedProducts, setAddedProducts] = useState([])
 
 
   useEffect(() => {
@@ -38,26 +41,26 @@ function ProductTable(props) {
     };
   }, [currentPage]);
 
-  console.log(newProductName)
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
+      {addedProducts.length!= 0 && <ProductToOrder products={addedProducts} setAddedProducts={setAddedProducts}/>}
+
       <TableContainer component={Paper} sx={{margin:"1vw", padding: "1vw", width: "80vw" }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: "bold" }}>ID</TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+              <TableCell align="left" sx={{ fontWeight: "bold" }}>
                 Nazwa
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                Ilość
+                Ilość dostępna w magazynie
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 Kategoria
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                Cena z ostatnich 30 dni
+                Najniższa cena z ostatnich 30 dni
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 Cena
@@ -66,20 +69,26 @@ function ProductTable(props) {
           </TableHead>
           <TableBody>
             {products.content.map((product) => {
-              return (
-                <TableRow key={product.id}>
-                  <TableCell>{product.id}</TableCell>
-                  <TableCell align="right">{product.name}</TableCell>
-                  <TableCell align="right">
-                    {product.availableQuantity}
-                  </TableCell>
-                  <TableCell align="right">{product.category}</TableCell>
-                  <TableCell align="right">
-                    {product.price.lowestFrom30Days}
-                  </TableCell>
-                  <TableCell align="right">{product.price.price}</TableCell>
-                </TableRow>
-              );
+              if (!addedProducts.some(p => p.id === product.id)){
+                return (
+                  <TableRow key={product.id}>
+                    <TableCell align="left">{product.name}</TableCell>
+                    <TableCell align="right">
+                      {product.availableQuantity}
+                    </TableCell>
+                    <TableCell align="right">{product.category}</TableCell>
+                    <TableCell align="right">
+                      {product.price.lowestFrom30Days}
+                    </TableCell>
+                    <TableCell align="right">{product.price.price}</TableCell>
+                    <TableCell align="right">
+                          <Button sx={{borderRadius:"80vw"}} variant="contained" onClick={()=>{
+                              setAddedProducts(addedProducts.concat(product))
+                          }}>+</Button>
+                      </TableCell>
+                  </TableRow>
+                );
+              }
             })}
           </TableBody>
         </Table>

@@ -17,7 +17,7 @@ function OrderTable(props) {
     const [orders, setOrders] = useState([{orderedProducts:[]}])
     const [open, setOpen] = useState(false)
     const [selectedOrder, setSelectedOrder] = useState(0)
-
+    
     useEffect(()=>{
         getClientOrders(setOrders)
     }, [])
@@ -44,7 +44,7 @@ function OrderTable(props) {
                 {
                     orders.map((element, index) => {
                         return(
-                            <TableRow>
+                            <TableRow key={index}>
                                 <TableCell sx={{textAlign:"left"}}>{element.id}</TableCell>
                                 <TableCell sx={{textAlign:"right"}}>{element.orderDate}</TableCell>
                                 <TableCell sx={{textAlign:"right"}}>{element.deliveryDate == null? "---" : element.deliveryDate}</TableCell>
@@ -82,8 +82,8 @@ function OrderTable(props) {
                 </TableHead>
                 <TableBody>
                     {
+                        orders.length != 0 &&
                         orders[selectedOrder].orderedProducts.map((element, index)=>{
-                            console.log(orders[selectedOrder])
                             return(
                                 <TableRow key={index}>
                                     <TableCell sx={{textAlign:"left"}}>
@@ -111,7 +111,7 @@ function OrderTable(props) {
                         <TableCell>
                         </TableCell>
                         <TableCell sx={{textAlign:"right", color:"green"}}>
-                            {orders[selectedOrder].totalPrice + " zł"}
+                            {orders.length != 0 && orders[selectedOrder].totalPrice + " zł"}
                         </TableCell>
                     </TableRow>
                 </TableBody>
