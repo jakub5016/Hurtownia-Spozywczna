@@ -10,11 +10,17 @@ import ClientView from './clientView/ClientView.jsx';
 import BasicView from './BasicView.jsx';
 import Register from './register/Register.jsx';
 import PrivacyPolitics from './privacy/PrivacyPolitics.jsx';
+import authourize from './auth/authorize.js'
+
 
 function Main() {
   // Step 2: Initialize state
   const [selectedSite, setSelectedSite] = useState(1);
   const [logged, setLogged] = useState(false)
+  const [userType, setUserType] = useState("")
+  useEffect(()=>{
+    authourize(setUserType, setLogged)
+  }, [])
 
   return (
     <React.StrictMode>
@@ -23,7 +29,7 @@ function Main() {
           <Route
             path="/"
             element={ // Use the Layout component as the wrapper for the App component
-              <Layout logged={logged} setLogged={setLogged}>
+              <Layout logged={logged} setLogged={setLogged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
                 <BasicView/>
               </Layout>
             }
@@ -31,7 +37,7 @@ function Main() {
           <Route
             path="/login"
             element={ // Use the Layout component as the wrapper for the App component
-              <Layout logged={logged} setLogged={setLogged}>
+              <Layout logged={logged} setLogged={setLogged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
                 <LoginPage logged={logged} setLogged={setLogged}/>
               </Layout>
             }
@@ -39,7 +45,7 @@ function Main() {
           <Route
             path="/register"
             element={ // Use the Layout component as the wrapper for the App component
-              <Layout logged={logged} setLogged={setLogged}>
+              <Layout logged={logged} setLogged={setLogged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
                 <Register/>
               </Layout>
             }
@@ -47,7 +53,7 @@ function Main() {
           <Route
             path="/privacy"
             element={ // Use the Layout component as the wrapper for the App component
-              <Layout logged={logged} setLogged={setLogged}>
+              <Layout logged={logged} setLogged={setLogged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
                 <PrivacyPolitics/>
               </Layout>
             }
@@ -56,8 +62,8 @@ function Main() {
             path="/admin"
             element={ // Use the Layout component as the wrapper for the App component
               // Step 3: Pass state and setter as props
-              <Layout selectedSite={selectedSite} setSelectedSite={setSelectedSite} logged={logged} setLogged={setLogged}>
-                <AdminView selectedSite={selectedSite} setSelectedSite={setSelectedSite}/>
+              <Layout logged={logged} setLogged={setLogged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
+                <AdminView logged={logged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}/>
               </Layout>
             }
           />
@@ -66,8 +72,8 @@ function Main() {
             path="/storekeeper"
             element={ // Use the Layout component as the wrapper for the App component
               // Step 3: Pass state and setter as props
-              <Layout selectedSite={selectedSite} setSelectedSite={setSelectedSite} logged={logged} setLogged={setLogged}>
-                <StorekeeperView selectedSite={selectedSite} setSelectedSite={setSelectedSite}/>
+              <Layout logged={logged} setLogged={setLogged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
+                <StorekeeperView logged={logged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}/>
               </Layout>
             }
           />
@@ -76,8 +82,8 @@ function Main() {
             path="/client"
             element={ // Use the Layout component as the wrapper for the App component
               // Step 3: Pass state and setter as props
-              <Layout selectedSite={selectedSite} setSelectedSite={setSelectedSite} logged={logged} setLogged={setLogged}>
-                <ClientView selectedSite={selectedSite} setSelectedSite={setSelectedSite}/>
+              <Layout logged={logged} setLogged={setLogged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
+                <ClientView logged={logged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}/>
               </Layout>
             }
           />

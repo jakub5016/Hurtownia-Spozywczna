@@ -6,18 +6,19 @@ import AdminNav from "../adminView/AdminNav";
 import StorekeeperNav from "../storekeeperView/StorekeeperNav";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ClientNav from "../clientView/ClientNav";
+import { useNavigate } from "react-router-dom";
+import logout from "../auth/logout";
 
 function Nav(props){
-    
-
+    const navigate = useNavigate()
     return(        
         <Paper sx={{position:"sticky", padding:"20px", width:"90vw", display:"flex"}}>
             {props.logged ?
-            localStorage.getItem("userType") == "admin" ?
+            props.userType == "ADMIN" ?
             <AdminNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/> :  
-            localStorage.getItem("userType") == "storekeeper"  ? 
+            props.userType == "EMPLOYEE "  ? 
             <StorekeeperNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/>: 
-            localStorage.getItem("userType") == "client"  ? 
+            props.userType == "CLIENT"  ? 
             <ClientNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/>
             :  <div className="container"></div> : <div className="container"></div>
             }
@@ -29,12 +30,12 @@ function Nav(props){
                     <IconButton>
                         <AccountCircleIcon sx={{fontSize:"40px"}}/>
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={()=>{logout(navigate)}}>
                         <ExitToAppIcon sx={{fontSize:"40px"}}/>
                     </IconButton>
                     </div>
                     : 
-                    <IconButton>
+                    <IconButton onClick={()=>{navigate("/login")}}>
                         <LoginIcon sx={{fontSize:"40px"}}/>
                     </IconButton>}
             </div>

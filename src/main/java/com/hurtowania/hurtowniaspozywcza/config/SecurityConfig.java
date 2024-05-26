@@ -69,8 +69,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/order/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
                         .requestMatchers("/order/**").hasAnyAuthority("CLIENT", "ADMIN", "EMPLOYEE")
                         
-                        // .requestMatchers(HttpMethod.GET, "/client/**/order").hasAnyAuthority("ADMIN", "EMPLOYEE") // Solve later
-                        .requestMatchers(HttpMethod.GET, "/client/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.GET, "/client/*/order").hasAnyAuthority("CLIENT","ADMIN", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.GET, "/client/*").hasAnyAuthority("ADMIN", "EMPLOYEE")
                         .requestMatchers(HttpMethod.POST, "/client/**").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/client/**").hasAnyAuthority("ADMIN")
 

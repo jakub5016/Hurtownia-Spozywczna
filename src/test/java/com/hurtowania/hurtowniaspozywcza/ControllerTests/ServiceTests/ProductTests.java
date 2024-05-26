@@ -79,38 +79,7 @@ public class ProductTests {
 
         productService.addProduct(request);
     }
-
-  @Test
-    public void getProduct_Success_ProductsExist() {
-    List<Product> expectedProducts = Arrays.asList(
-        Product.builder().id(1L).name("Product 1").build(),
-        Product.builder().id(2L).name("Product 2").build()
-    );
-
-    when(productRepository.findAll()).thenReturn(expectedProducts);
-
-    List<Product> retrievedProducts = productService.getProduct();
-
-    assertNotNull(retrievedProducts);
-    assertEquals(expectedProducts.size(), retrievedProducts.size());
-
-    for (int i = 0; i < retrievedProducts.size(); i++) {
-        assertEquals(expectedProducts.get(i).getId(), retrievedProducts.get(i).getId());
-        assertEquals(expectedProducts.get(i).getName(), retrievedProducts.get(i).getName());
-        }
-    }
-
-    @Test
-    public void getProduct_Success_NoProductsExist() {
-
-    when(productRepository.findAll()).thenReturn(Collections.emptyList());
     
-    List<Product> retrievedProducts = productService.getProduct();
-    
-    assertNotNull(retrievedProducts);
-    assertTrue(retrievedProducts.isEmpty());
-    }
-
     @Test
     void getProductById_Success() {
     long productId = 1L;

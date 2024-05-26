@@ -63,7 +63,7 @@ function Register(){
         
         <Dialog open={registered} onClose={()=>{setRegistered(false)}}>
             <h1>
-            Zostałeś zarejestrowany pomyślnie <a href="" onClick={()=>navigate("/login")}>przejdź do logowania</a>.
+            Zostałeś zarejestrowany pomyślnie <a href="" onClick={()=>navigate("/")}>przejdź do strony głównej</a>.
             </h1>
         </Dialog>
     </div>

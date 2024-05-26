@@ -8,7 +8,7 @@ function LoginPage(props) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
-    props.logged ? navigate("/client") : null
+    // props.logged ? navigate("/client") : null
 
         return (
             <div className='container'>
@@ -31,7 +31,7 @@ function LoginPage(props) {
                     <input type="password" onChange={(e)=>{setPassword(e.target.value)}}/>
                 </form>
                 <h4>Nie posiadasz jeszcze konta na naszej platformie :O ? Zarejestruj się <a href='' onClick={()=>{navigate("/register")}} style={{color:"blue"}}> tutaj </a></h4>
-                <Button onClick={()=>{login(username, password, props.setLogged, navigate)}} variant="contained">
+                <Button onClick={()=>{login(username, password, props.setLogged, navigate); setPassword(""); setUsername("")}} variant="contained">
                     Zaloguj się
                     </Button>
                 </Paper>
