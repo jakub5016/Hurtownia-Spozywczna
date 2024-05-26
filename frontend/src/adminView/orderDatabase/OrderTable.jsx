@@ -16,11 +16,15 @@ import getClientOrders from "./getClientOrders.js"
 function OrderTable(props) {
     const [orders, setOrders] = useState([{orderedProducts:[]}])
     const [open, setOpen] = useState(false)
-    const [selectedOrder, setSelectedOrder] = useState(0)
+    const [selectedOrder, setSelectedOrder] = useState(-1)
 
     useEffect(()=>{
         getClientOrders(setOrders)
     }, [])
+
+    useEffect(() => {
+        console.log(orders)
+    }, [orders]);
     
 
   return (
@@ -61,62 +65,64 @@ function OrderTable(props) {
         </Table>
       </TableContainer>
 
-      <Dialog open={open} onClose={()=>{setOpen(false)}} sx={{padding:"1vw"}}>
-            <h1>Zamówione produkty</h1>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell sx={{ fontWeight: "bold", textAlign:"left"}}>
-                            Nazwa
-                        </TableCell>
-                        <TableCell sx={{ fontWeight: "bold", textAlign:"left"}}>
-                            Ilość
-                        </TableCell>
-                        <TableCell sx={{ fontWeight: "bold", textAlign:"left"}}>
-                            Cena za sztukę
-                        </TableCell>
-                        <TableCell sx={{ fontWeight: "bold", textAlign:"left"}}>
-                            Cena ostateczna
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {
-                        orders[selectedOrder].orderedProducts.map((element, index)=>{
-                            console.log(orders[selectedOrder])
-                            return(
-                                <TableRow key={index}>
-                                    <TableCell sx={{textAlign:"left"}}>
-                                        {element.product.name}
-                                    </TableCell>
-                                    <TableCell sx={{textAlign:"right"}}>
-                                        {element.quantity}
-                                    </TableCell>
-                                    <TableCell sx={{textAlign:"right"}}>
-                                        {element.price/element.quantity + " zł"}
-                                    </TableCell>
-                                    <TableCell sx={{textAlign:"right"}}>
-                                        {element.price + " zł"}
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        })
-                    }
-                    <TableRow >
-                        <TableCell sx={{textAlign:"left",fontWeight: "bold", color:"green"}}>
-                            Razem
-                        </TableCell>
-                        <TableCell>
-                        </TableCell>
-                        <TableCell>
-                        </TableCell>
-                        <TableCell sx={{textAlign:"right", color:"green"}}>
-                            {orders[selectedOrder].totalPrice + " zł"}
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-      </Dialog>
+        {
+            selectedOrder >=0  && selectedOrder<orders.length &&<Dialog open={open} onClose={()=>{setOpen(false)}} sx={{padding:"1vw"}}>
+                <h1>Zamówione produkty</h1>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell sx={{ fontWeight: "bold", textAlign:"left"}}>
+                                Nazwa
+                            </TableCell>
+                            <TableCell sx={{ fontWeight: "bold", textAlign:"left"}}>
+                                Ilość
+                            </TableCell>
+                            <TableCell sx={{ fontWeight: "bold", textAlign:"left"}}>
+                                Cena za sztukę
+                            </TableCell>
+                            <TableCell sx={{ fontWeight: "bold", textAlign:"left"}}>
+                                Cena ostateczna
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {
+                            orders[selectedOrder].orderedProducts.map((element, index)=>{
+                                console.log(orders[selectedOrder])
+                                return(
+                                    <TableRow key={index}>
+                                        <TableCell sx={{textAlign:"left"}}>
+                                            {element.product.name}
+                                        </TableCell>
+                                        <TableCell sx={{textAlign:"right"}}>
+                                            {element.quantity}
+                                        </TableCell>
+                                        <TableCell sx={{textAlign:"right"}}>
+                                            {element.price/element.quantity + " zł"}
+                                        </TableCell>
+                                        <TableCell sx={{textAlign:"right"}}>
+                                            {element.price + " zł"}
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        }
+                        <TableRow >
+                            <TableCell sx={{textAlign:"left",fontWeight: "bold", color:"green"}}>
+                                Razem
+                            </TableCell>
+                            <TableCell>
+                            </TableCell>
+                            <TableCell>
+                            </TableCell>
+                            <TableCell sx={{textAlign:"right", color:"green"}}>
+                                {orders[selectedOrder].totalPrice + " zł"}
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </Dialog>
+        }
     </div>
   );
 }
