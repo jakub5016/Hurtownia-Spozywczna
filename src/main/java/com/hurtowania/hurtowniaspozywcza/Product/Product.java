@@ -25,7 +25,7 @@ public class Product {
     private int availableQuantity;
     
     @Column(nullable = false)
-    private String category;
+    private ProductCategory category;
     
     @Column(nullable = false)
     @Builder.Default

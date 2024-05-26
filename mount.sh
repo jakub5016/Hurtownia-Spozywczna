@@ -34,20 +34,9 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 10,
-  "name": "Marchew",
-  "category": "Warzywa i owoce",
-  "quantity": 100
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
   "price": 5,
-  "name": "Chleb",
-  "category": "Pieczywo",
+  "name": "Marchew",
+  "category": "WARZYWA_I_OWOCE",
   "quantity": 50
 }'
 
@@ -56,65 +45,10 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 15,
-  "name": "Ser żółty",
-  "category": "Nabiał",
-  "quantity": 80
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 20,
-  "name": "Szynka",
-  "category": "Mięso i wędliny",
-  "quantity": 60
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 25,
-  "name": "Łosoś",
-  "category": "Ryby i owoce morza",
-  "quantity": 40
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 8,
-  "name": "Zielony groszek mrożony",
-  "category": "Mrożonki",
-  "quantity": 90
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 12,
-  "name": "Fasolka konserwowa",
-  "category": "Konserwy",
-  "quantity": 70
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 6,
-  "name": "Ryż biały",
-  "category": "Produkty sypkie",
-  "quantity": 150
+  "price": 2,
+  "name": "Chleb",
+  "category": "PIECZYWO",
+  "quantity": 100
 }'
 
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -123,9 +57,9 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "price": 3,
-  "name": "Pieprz czarny mielony",
-  "category": "Przyprawy i zioła",
-  "quantity": 200
+  "name": "Ser",
+  "category": "NABIAL",
+  "quantity": 75
 }'
 
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -134,8 +68,52 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "price": 10,
-  "name": "Czekolada mleczna",
-  "category": "Słodycze i przekąski",
+  "name": "Kiełbasa",
+  "category": "MIESO_I_WEDLINY",
+  "quantity": 40
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 15,
+  "name": "Łosoś",
+  "category": "RYBY_I_OWOCE_MORZA",
+  "quantity": 30
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 8,
+  "name": "Mrożona pizza",
+  "category": "MROZONKI",
+  "quantity": 60
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 6,
+  "name": "Puszka fasoli",
+  "category": "KONSERWY",
+  "quantity": 100
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 4,
+  "name": "Ryż",
+  "category": "PRODUKTY_SYPKIE",
   "quantity": 120
 }'
 
@@ -145,9 +123,9 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "price": 2,
-  "name": "Woda mineralna",
-  "category": "Napoje bezalkoholowe",
-  "quantity": 300
+  "name": "Pieprz",
+  "category": "PRZYPRAWY_I_ZIOLA",
+  "quantity": 200
 }'
 
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -155,9 +133,31 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 50,
-  "name": "Wino czerwone",
-  "category": "Napoje alkoholowe",
+  "price": 3,
+  "name": "Czekolada",
+  "category": "SLODYCZE_I_PRZEKASKI",
+  "quantity": 150
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 1,
+  "name": "Woda mineralna",
+  "category": "NAPOJE_BEZALKOHOLOWE",
+  "quantity": 250
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 20,
+  "name": "Wino",
+  "category": "NAPOJE_ALKOHOLOWE",
   "quantity": 50
 }'
 
@@ -168,7 +168,7 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -d '{
   "price": 7,
   "name": "Oliwa z oliwek",
-  "category": "Oleje i tłuszcze",
+  "category": "OLEJE_I_TLUSZCZE",
   "quantity": 80
 }'
 
@@ -178,9 +178,9 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "price": 12,
-  "name": "Migdały bezglutenowe",
-  "category": "Produkty bezglutenowe",
-  "quantity": 70
+  "name": "Mleko sojowe",
+  "category": "PRODUKTY_DIETETYCZNE_I_EKOLOGICZNE",
+  "quantity": 60
 }'
 
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -188,10 +188,21 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 4,
-  "name": "Herbata zielona",
-  "category": "Kawa, herbata i kakao",
-  "quantity": 100
+  "price": 14,
+  "name": "Makaron bezglutenowy",
+  "category": "PRODUKTY_BEZGLUTENOWE",
+  "quantity": 90
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 10,
+  "name": "Kawa",
+  "category": "KAWA_HERBATA_I_KAKAO",
+  "quantity": 70
 }'
 
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -201,29 +212,7 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -d '{
   "price": 5,
   "name": "Ketchup",
-  "category": "Sosy i dressingi",
-  "quantity": 130
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 7,
-  "name": "Ogórki kiszone",
-  "category": "Przetwory owocowe i warzywne",
-  "quantity": 90
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 6,
-  "name": "Chleb chrupki",
-  "category": "Pieczywo chrupkie i sucharki",
+  "category": "SOSY_I_DRESSINGI",
   "quantity": 110
 }'
 
@@ -232,108 +221,10 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 15,
-  "name": "Zupa instant",
-  "category": "Zupy instant i dania gotowe",
-  "quantity": 140
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 8,
-  "name": "Musli owocowe",
-  "category": "Płatki śniadaniowe i musli",
-  "quantity": 160
-}'
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 0.10,
-  "name": "Śruba M6",
-  "category": "Śruby",
-  "quantity": 500
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 0.05,
-  "name": "Nakrętka M6",
-  "category": "Nakrętki",
-  "quantity": 1000
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 0.02,
-  "name": "Podkładka M6",
-  "category": "Podkładki",
-  "quantity": 1500
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 0.15,
-  "name": "Krzyżak do glazury 2mm",
-  "category": "Krzyżaki do glazury",
-  "quantity": 800
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 0.12,
-  "name": "Wkręt do drewna 3.5x35",
-  "category": "Wkręty",
-  "quantity": 600
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 0.08,
-  "name": "Kołek rozporowy 6x30",
-  "category": "Kołki rozporowe",
-  "quantity": 900
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 0.05,
-  "name": "Gwóźdź 3.5x40",
-  "category": "Gwoździe",
-  "quantity": 1000
-}'
-
-curl -b /tmp/cookies.txt -X 'POST' \
-  'http://localhost:8080/product' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "price": 0.10,
-  "name": "Nit 4x10",
-  "category": "Nity",
-  "quantity": 700
+  "price": 6,
+  "name": "Dżem truskawkowy",
+  "category": "PRZETWORY_OWOCOWE_I_WARZYWNE",
+  "quantity": 130
 }'
 
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -342,9 +233,9 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "price": 3,
-  "name": "Klej montażowy",
-  "category": "Kleje i silikony",
-  "quantity": 150
+  "name": "Wasa chleb chrupki",
+  "category": "PIECZYWO_CHRUPKIE_I_SUCHARKI",
+  "quantity": 140
 }'
 
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -352,10 +243,10 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 1.5,
-  "name": "Taśma malarska 48mm",
-  "category": "Taśmy budowlane",
-  "quantity": 200
+  "price": 4,
+  "name": "Zupa instant",
+  "category": "ZUPY_INSTANT_I_DANIA_GOTOWE",
+  "quantity": 120
 }'
 
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -363,9 +254,9 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 10,
-  "name": "Młotek 500g",
-  "category": "Narzędzia ręczne",
+  "price": 5,
+  "name": "Musli",
+  "category": "PLATKI_SNIADANIOWE_I_MUSLI",
   "quantity": 80
 }'
 
@@ -374,10 +265,10 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 100,
-  "name": "Wiertarka udarowa",
-  "category": "Narzędzia elektryczne",
-  "quantity": 30
+  "price": 2,
+  "name": "Deserek owocowy",
+  "category": "PRODUKTY_DLA_DZIECI",
+  "quantity": 90
 }'
 
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -385,10 +276,10 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 50,
-  "name": "Drabina aluminiowa 3m",
-  "category": "Drabiny i rusztowania",
-  "quantity": 20
+  "price": 3,
+  "name": "Baton energetyczny",
+  "category": "PRZEKASKI_NA_WYNOS",
+  "quantity": 50
 }'
 
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -396,9 +287,9 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 7,
-  "name": "Pianka montażowa 750ml",
-  "category": "Materiały izolacyjne",
+  "price": 4,
+  "name": "Ciastka",
+  "category": "ARTYKULY_CUKIERNICZE",
   "quantity": 100
 }'
 
@@ -407,10 +298,241 @@ curl -b /tmp/cookies.txt -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 0.50,
-  "name": "Uszczelka gumowa 50mm",
-  "category": "Uszczelki i profile",
-  "quantity": 500
+  "price": 5,
+  "name": "Kanapki",
+  "category": "ARTYKULY_SNIADANIOWE",
+  "quantity": 120
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 2,
+  "name": "Śruby",
+  "category": "SRUBY",
+  "quantity": 200
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 1,
+  "name": "Nakrętki",
+  "category": "NAKRETKI",
+  "quantity": 300
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 3,
+  "name": "Podkładki",
+  "category": "PODKLADKI",
+  "quantity": 150
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 2,
+  "name": "Wkręty",
+  "category": "WKRETY",
+  "quantity": 250
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 4,
+  "name": "Klej do drewna",
+  "category": "KLEJE_I_SILIKONY",
+  "quantity": 100
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 6,
+  "name": "Taśma malarska",
+  "category": "TASMY_BUDOWLANE",
+  "quantity": 80
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 8,
+  "name": "Młotek",
+  "category": "NARZEDZIA_RECZNE",
+  "quantity": 70
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 50,
+  "name": "Wiertarka elektryczna",
+  "category": "NARZEDZIA_ELEKTRYCZNE",
+  "quantity": 30
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 20,
+  "name": "Drabina aluminiowa",
+  "category": "DRABINY_I_RUSZTOWANIA",
+  "quantity": 40
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 7,
+  "name": "Maty izolacyjne",
+  "category": "MATERIALY_IZOLACYJNE",
+  "quantity": 60
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 2,
+  "name": "Uszczelka drzwiowa",
+  "category": "USZCZELKI_I_PROFILE",
+  "quantity": 150
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 10,
+  "name": "Farba lateksowa",
+  "category": "FARBY_I_LAKIERY",
+  "quantity": 70
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 3,
+  "name": "Pędzel malarski",
+  "category": "WALKI_I_PEDZLE_MALARSKIE",
+  "quantity": 120
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 4,
+  "name": "Żarówka LED",
+  "category": "OSWIETLENIE",
+  "quantity": 200
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 5,
+  "name": "Gniazdo elektryczne",
+  "category": "AKCESORIA_ELEKTRYCZNE",
+  "quantity": 180
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 6,
+  "name": "Przedłużacz",
+  "category": "PRZEDLUZACZE_I_LISTWY_ZASILAJACE",
+  "quantity": 90
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 8,
+  "name": "Rura PVC",
+  "category": "RURY_I_ZLACZKI_HYDRAULICZNE",
+  "quantity": 120
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 15,
+  "name": "Bateria łazienkowa",
+  "category": "KRANY_I_BATERIE_LAZIENKOWE",
+  "quantity": 70
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 30,
+  "name": "Wentylator sufitowy",
+  "category": "WENTYLATORY_I_KLIMATYZATORY",
+  "quantity": 50
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 25,
+  "name": "Panele podłogowe",
+  "category": "PANELE_PODLOGOWE_I_LISTWY_PRZYPODLOGOWE",
+  "quantity": 60
+}'
+
+curl -b /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "price": 10,
+  "name": "Gładź gipsowa",
+  "category": "MATERIALY_WYKONCZENIOWE",
+  "quantity": 100
 }'
 
 #Add orders 
