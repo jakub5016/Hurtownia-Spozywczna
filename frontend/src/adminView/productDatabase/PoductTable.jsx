@@ -15,6 +15,7 @@ import getProducts from "./getProducts";
 import addProduct from "./addProduct";
 import ProductToOrder from "./ProductToOrder";
 import EditProductDialog from "./EditProductDialog";
+import PriceHistoryDialog from "../priceDatabase/PriceHistoryDialog";
 
 
 function UserProductView(product, setAddedProducts, addedProducts){
@@ -39,7 +40,7 @@ function UserProductView(product, setAddedProducts, addedProducts){
 }
 
 
-function AdminProductView(product, setOpenEdit, setNewProductQuantity, setNewProductPrice, setEditProductID){
+function AdminProductView(product, setOpenEdit, setOpenPriceHistory ,setNewProductQuantity, setNewProductPrice, setEditProductID){
   return(
   <TableRow key={product.id} sx={{background: product.archived?"gray":"white"}}>
     <TableCell align="left">{product.name}</TableCell>
@@ -51,7 +52,11 @@ function AdminProductView(product, setOpenEdit, setNewProductQuantity, setNewPro
       {product.price.lowestFrom30Days}
     </TableCell>
     <TableCell align="right">{product.price.price}</TableCell>
-    
+    <TableCell align="right">
+          <Button sx={{borderRadius:"80vw", fontSize:"12px"}} variant="contained" onClick={()=>{
+            setOpenPriceHistory(true)
+          }}>Historia Cen</Button>
+      </TableCell>
     {product.archived ? null : <TableCell align="right">
           <Button sx={{borderRadius:"80vw", fontSize:"12px"}} variant="contained" onClick={()=>{
               setNewProductQuantity(product.availableQuantity)
@@ -60,6 +65,8 @@ function AdminProductView(product, setOpenEdit, setNewProductQuantity, setNewPro
               setOpenEdit(true)
           }}>Edytuj</Button>
       </TableCell>}
+
+
   </TableRow>
   )
 }
@@ -67,9 +74,13 @@ function AdminProductView(product, setOpenEdit, setNewProductQuantity, setNewPro
 
 function ProductTable(props) {
   const [products, setProducts] = useState({ content: [] });
+  
   const [open, setOpen] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
+  const [openPriceHistory, setOpenPriceHistory] = useState(false)
+
   const [currentPage, setCurrentPage] = useState(0)
+  
   const [newProductPrice, setNewProductPrice] = useState(0)
   const [newProductName, setNewProductName] = useState("")
   const [newProductCategory, setNewProductCategory] = useState("")
@@ -96,6 +107,8 @@ function ProductTable(props) {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <EditProductDialog open={openEdit} setOpen={setOpenEdit} id={editProductID} price={editProductPrice} quantity={editProductQuantity}/>
+      <PriceHistoryDialog open={openPriceHistory} setOpen={setOpenPriceHistory} />
+      
       {addedProducts.length!= 0 && <ProductToOrder products={addedProducts} setAddedProducts={setAddedProducts}/>}
 
       <TableContainer component={Paper} sx={{margin:"1vw", padding: "1vw", width: "80vw" }}>
@@ -126,7 +139,7 @@ function ProductTable(props) {
                   return (UserProductView(product, setAddedProducts, addedProducts));
                 }
                 else{
-                  return (AdminProductView(product, setOpenEdit, setEditProductQuantity, setEditProductPrice, setEditProductID));
+                  return (AdminProductView(product, setOpenEdit, setOpenPriceHistory ,setEditProductQuantity, setEditProductPrice, setEditProductID));
                 }
               }
             })}

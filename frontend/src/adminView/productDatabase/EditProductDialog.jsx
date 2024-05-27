@@ -41,7 +41,6 @@ async function archive(productID){
 function EditProductDialog(props){
     const [newPrice, setNewPrice] = useState(props.price)
     const [newQuantity, setNewQuantity] = useState(props.quantity)
-    console.log("New price "+ newPrice + " " + props.price)
 
     return(
         <Dialog open={props.open} onClose={()=>{props.setOpen(false)}}>
@@ -51,7 +50,7 @@ function EditProductDialog(props){
                         Nowa cena produktu: 
                     </h2>
                     <TextField
-                        onChange={(e)=>{e.target.value == "0" ? console.log(e.target.value) : setNewPrice(e.target.value)}}
+                        onChange={(e)=>{e.target.value == "0" ? null : setNewPrice(e.target.value)}}
                         sx={{justifyContent:"center"}}
                         defaultValue={props.price}
                     />
