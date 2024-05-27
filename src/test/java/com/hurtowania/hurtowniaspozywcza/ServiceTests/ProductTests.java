@@ -21,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -143,22 +144,27 @@ public class ProductTests {
     String productName = "Test product";
     Product product = Product.builder().name(productName).build();
 
-    when(productRepository.findByName(productName)).thenReturn(product);
+    Pageable pageable = PageRequest.of(0, 1);
 
-    Product retrievedProduct = productService.getProductByName(productName);
+    when(productRepository.findByNameContainingIgnoreCase(pageable, productName)).thenReturn(new PageImpl<>(Collections.singletonList(product), pageable, 1));
 
-    assertEquals(product, retrievedProduct);
+    Page<Product> retrievedProductPage = productService.getProductByName(0, 1, productName);
+
+    assertEquals(1, retrievedProductPage.getContent().size());
+    assertEquals(product, retrievedProductPage.getContent().get(0));
     }
 
     @Test
     void getProductByName_NotFound() {
-    String productName = "Test product";
+        String productName = "Test product";
 
-    when(productRepository.findByName(productName)).thenReturn(null);
-
-    Product retrievedProduct = productService.getProductByName(productName);
-
-    assertNull(retrievedProduct);
+        Pageable pageable = PageRequest.of(0, 1);
+    
+        when(productRepository.findByNameContainingIgnoreCase(pageable, productName)).thenReturn(new PageImpl<>(Collections.emptyList()));
+    
+        Page<Product> retrievedProductPage = productService.getProductByName(0, 1, productName);
+    
+        assertTrue(retrievedProductPage.isEmpty());
     }
 
     @Test
