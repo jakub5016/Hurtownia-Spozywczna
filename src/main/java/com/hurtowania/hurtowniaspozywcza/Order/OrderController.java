@@ -2,9 +2,12 @@ package com.hurtowania.hurtowniaspozywcza.Order;
 
 import com.hurtowania.hurtowniaspozywcza.Order.requests.CreateOrderRequest;
 import com.hurtowania.hurtowniaspozywcza.OrderedProduct.OrderedProduct;
+import com.hurtowania.hurtowniaspozywcza.Product.Product;
 import com.hurtowania.hurtowniaspozywcza.Product.ProductDTO;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,11 @@ public class OrderController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteOrder(@PathVariable int id) {
         orderService.deleteOrder(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<Order>> getOrder(@RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize){
+        return ResponseEntity.ok(orderService.getOrder(pageNo, pageSize));
     }
 
     @GetMapping("/{id}")
