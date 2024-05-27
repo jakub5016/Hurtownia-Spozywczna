@@ -39,9 +39,9 @@ function UserProductView(product, setAddedProducts, addedProducts){
 }
 
 
-function AdminProductView(product, setOpenEdit, setNewProductQuantity, setNewProductPrice){
+function AdminProductView(product, setOpenEdit, setNewProductQuantity, setNewProductPrice, setEditProductID){
   return(
-  <TableRow key={product.id}>
+  <TableRow key={product.id} sx={{background: product.archived?"gray":"white"}}>
     <TableCell align="left">{product.name}</TableCell>
     <TableCell align="right">
       {product.availableQuantity}
@@ -51,13 +51,15 @@ function AdminProductView(product, setOpenEdit, setNewProductQuantity, setNewPro
       {product.price.lowestFrom30Days}
     </TableCell>
     <TableCell align="right">{product.price.price}</TableCell>
-    <TableCell align="right">
+    
+    {product.archived ? null : <TableCell align="right">
           <Button sx={{borderRadius:"80vw", fontSize:"12px"}} variant="contained" onClick={()=>{
               setNewProductQuantity(product.availableQuantity)
               setNewProductPrice(product.price.price)
+              setEditProductID(product.id)
               setOpenEdit(true)
           }}>Edytuj</Button>
-      </TableCell>
+      </TableCell>}
   </TableRow>
   )
 }
@@ -73,7 +75,10 @@ function ProductTable(props) {
   const [newProductCategory, setNewProductCategory] = useState("")
   const [newProductQuantity, setNewProductQuantity] = useState(0)
   const [addedProducts, setAddedProducts] = useState([])
-
+  
+  const [editProductID, setEditProductID] = useState(null)
+  const [editProductPrice, setEditProductPrice] = useState(0)
+  const [editProductQuantity, setEditProductQuantity] = useState(0)
 
   useEffect(() => {
     let isMounted = true;
@@ -90,7 +95,7 @@ function ProductTable(props) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <EditProductDialog open={openEdit} setOpen={setOpenEdit} price={newProductPrice} quantity={newProductQuantity}/>
+      <EditProductDialog open={openEdit} setOpen={setOpenEdit} id={editProductID} price={editProductPrice} quantity={editProductQuantity}/>
       {addedProducts.length!= 0 && <ProductToOrder products={addedProducts} setAddedProducts={setAddedProducts}/>}
 
       <TableContainer component={Paper} sx={{margin:"1vw", padding: "1vw", width: "80vw" }}>
@@ -121,7 +126,7 @@ function ProductTable(props) {
                   return (UserProductView(product, setAddedProducts, addedProducts));
                 }
                 else{
-                  return (AdminProductView(product, setOpenEdit, setNewProductQuantity, setNewProductPrice));
+                  return (AdminProductView(product, setOpenEdit, setEditProductQuantity, setEditProductPrice, setEditProductID));
                 }
               }
             })}
