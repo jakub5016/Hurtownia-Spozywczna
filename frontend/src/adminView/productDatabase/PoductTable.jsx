@@ -135,10 +135,11 @@ function ProductTable(props) {
           <TableBody>
             {products.content.map((product) => {
               if (!addedProducts.some(p => p.id === product.id)){
-                if (props.userType == "USER"){
+                if (props.userType == "CLIENT"){
                   return (UserProductView(product, setAddedProducts, addedProducts));
                 }
                 else{
+
                   return (AdminProductView(product, setOpenEdit, setOpenPriceHistory ,setEditProductQuantity, setEditProductPrice, setEditProductID));
                 }
               }
