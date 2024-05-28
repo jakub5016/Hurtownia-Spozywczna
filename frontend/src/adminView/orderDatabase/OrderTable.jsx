@@ -9,24 +9,40 @@ import {
   TableRow,
   TableBody,
   useThemeProps,
+  Pagination,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import getClientOrders from "./getClientOrders.js"
+import getAllOrders from "./getAllOrdes.js";
+
+
+const orderStatusColors = {
+    REJECTED: '#F5A9A9',
+    FINALIZED: '#A9F5A9',
+    ACCEPTED: '#A9F5A9',
+    IN_PROGRESS: '#A9D0F5',
+    CREATED: '#F5F5A9',
+    IN_DELIVERY: '#A9F5E1',
+    CANCELLED: '#F5A9A9'
+};
+
 
 function OrderTable(props) {
-    const [orders, setOrders] = useState([{orderedProducts:[]}])
+    const [orders, setOrders] = useState({content:[{client:{name:"", address:""}, orderedProducts:[]}]})
     const [open, setOpen] = useState(false)
     const [selectedOrder, setSelectedOrder] = useState(0)
-    
+    const [currentPage, setCurrentPage] = useState(0)
+
     useEffect(()=>{
         if (props.userType == "CLIENT"){
             getClientOrders(setOrders)
         }
         else{
-            console.log(props.type)
+            getAllOrders(props.type, setOrders, currentPage)
         }
-    }, [])
+    }, [props.type])
     
+    console.log(orders.content.orderedProducts)
 
   return (
     <div style={{display:"flex", flexDirection:"column"}}>
@@ -47,9 +63,9 @@ function OrderTable(props) {
           </TableHead>
           <TableBody>
                 {
-                    orders.map((element, index) => {
+                    orders.content.map((element, index) => {
                         return(
-                            <TableRow key={index}>
+                            <TableRow sx={{ backgroundColor: orderStatusColors[element.status] }} key={index}>
                                 <TableCell sx={{textAlign:"left"}}>{element.id}</TableCell>
                                 <TableCell sx={{textAlign:"right"}}>{element.orderDate}</TableCell>
                                 <TableCell sx={{textAlign:"right"}}>{element.deliveryDate == null? "---" : element.deliveryDate}</TableCell>
@@ -65,8 +81,34 @@ function OrderTable(props) {
           </TableBody>
         </Table>
       </TableContainer>
-
+      {props.userType != "CLIENT" ? <Pagination
+        sx={{ margin: "0 auto", marginTop:"30px" }}
+        color="primary"
+        count={orders.totalPages}
+        onChange={(event, page)=>{setCurrentPage(page-1)}}
+      />:null}
       <Dialog open={open} onClose={()=>{setOpen(false)}} sx={{padding:"1vw"}}>
+            {
+                props.userType != "CLIENT"?
+                <div >
+                    <h1>
+                        Dane klienta
+                    </h1>
+
+                    <h3>
+                        Imię i nazwisko:  <a style={{fontWeight:"normal", textAlign:"left", paddingLeft:"30px"}}>
+                        {orders.content[selectedOrder].client.name}
+                        </a>
+                    </h3>
+                    <h3>
+                        Adres:  <a style={{fontWeight:"normal", textAlign:"left", paddingLeft:"30px"}}>
+                        {orders.content[selectedOrder].client.address}
+                        </a>
+                    </h3>
+                </div>
+                : null 
+            }
+
             <h1>Zamówione produkty</h1>
             <Table>
                 <TableHead>
@@ -86,9 +128,9 @@ function OrderTable(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {
-                        orders.length != 0 &&
-                        orders[selectedOrder].orderedProducts.map((element, index)=>{
+                    {   
+                        orders.content.length > 0  && 
+                        orders.content[selectedOrder].orderedProducts.map((element, index)=>{
                             return(
                                 <TableRow key={index}>
                                     <TableCell sx={{textAlign:"left"}}>
@@ -116,7 +158,7 @@ function OrderTable(props) {
                         <TableCell>
                         </TableCell>
                         <TableCell sx={{textAlign:"right", color:"green"}}>
-                            {orders.length != 0 && orders[selectedOrder].totalPrice + " zł"}
+                            {orders.content.length != 0 && orders.content[selectedOrder].totalPrice + " zł"}
                         </TableCell>
                     </TableRow>
                 </TableBody>

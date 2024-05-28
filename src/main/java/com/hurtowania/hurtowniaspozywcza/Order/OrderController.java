@@ -34,8 +34,12 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Order>> getOrder(@RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize){
-        return ResponseEntity.ok(orderService.getOrder(pageNo, pageSize));
+    public ResponseEntity<Page<Order>> getOrder(
+        @RequestParam(defaultValue = "0", required = false) int pageNo, 
+        @RequestParam(defaultValue = "10", required = false) int pageSize,
+        @RequestParam(defaultValue = "all") String type){
+            
+        return ResponseEntity.ok(orderService.getOrder(pageNo, pageSize, type));
     }
 
     @GetMapping("/{id}")

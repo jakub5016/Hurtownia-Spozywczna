@@ -1,18 +1,23 @@
-async function getProducts(pageNo = 0, pageSize = 10) {
+async function getAllOrders(type, setOrders ,pageNo = 0, pageSize = 10) {
+
     try {
-        const response = await fetch(
-            `http://localhost:8080/order?pageNo=${pageNo}&pageSize=${pageSize}`,
+        const resp = await fetch(
+            `http://localhost:8080/order?pageNo=${pageNo}&pageSize=${pageSize}&type=${type}`,
             {
-                method: 'GET',
-                credentials: 'include'
+                method: "GET",
+                credentials: "include"
             }
         );
-        const json = await response.json();
-        return json;
-    } catch (err) {
-        console.error('Error occurred:', err);
-        return [];
+        let json = await resp.json();
+        if (json.content.length ==0){
+            setOrders({content:[{client:{name:"", address:""}, orderedProducts:[]}]})
+        }
+        else{
+            setOrders(json);
+        }
+    } catch (error) {
+        console.error("Fetch error:", error);
     }
 }
 
-export default getProducts
+export default getAllOrders

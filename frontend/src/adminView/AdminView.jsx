@@ -20,7 +20,7 @@ function AdminView(props) {
       ) : props.selectedSite == 2 ? (
         <ClientTable userType="ADMIN" />
       ) : (
-        <OrderTable userType="ADMIN" />
+        <OrderTable type="all" userType="ADMIN" />
       )}
     </div>
   ) : null;
