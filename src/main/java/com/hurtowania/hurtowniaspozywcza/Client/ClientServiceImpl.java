@@ -5,11 +5,15 @@ import com.hurtowania.hurtowniaspozywcza.AppUser.IAppUserService;
 import com.hurtowania.hurtowniaspozywcza.AppUser.UserType;
 import com.hurtowania.hurtowniaspozywcza.Client.requests.CreateClientRequest;
 import com.hurtowania.hurtowniaspozywcza.Client.requests.GetClientDTO;
+import com.hurtowania.hurtowniaspozywcza.Product.Product;
 
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -64,4 +68,12 @@ public class ClientServiceImpl implements IClientService {
                                         
         return dto;
     }
+
+    @Override
+    public Page<Client> getClient(int pageNo, int pageSize){
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Client> page = clientRepository.findAll(pageable);
+        return page;
+    }
+
 }

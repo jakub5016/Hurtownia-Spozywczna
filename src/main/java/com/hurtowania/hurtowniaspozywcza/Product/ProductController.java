@@ -58,7 +58,7 @@ public class ProductController {
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
+    
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 

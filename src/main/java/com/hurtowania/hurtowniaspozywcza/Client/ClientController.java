@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+
 import com.hurtowania.hurtowniaspozywcza.Order.Order;
+import com.hurtowania.hurtowniaspozywcza.Product.Product;
 import com.hurtowania.hurtowniaspozywcza.Order.IOrderService;
 import java.util.List;
 
@@ -56,5 +59,10 @@ public class ClientController {
         }
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<Client>> getClient(@RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize){
+        return ResponseEntity.ok(clientService.getClient(pageNo, pageSize));
     }
 }
