@@ -4,17 +4,13 @@ import getPriceHistory from "./getPriceHistory"
 
 function PriceHistoryDialog(props){
     const [priceHist, setPriceHist] = useState({prices:[], times:[]})
-
+    
     useEffect(()=>{
-        getPriceHistory(3).then(data=>{
+        getPriceHistory(props.id).then(data=>{
             setPriceHist(data)
         })
-    }, [])
+    }, [props.id])
 
-
-    useEffect(()=>{
-        console.log(priceHist)
-    }, [priceHist])
 
     return(
         <Dialog open={props.open} onClose={()=>{props.setOpen(false)}}>

@@ -40,7 +40,7 @@ function UserProductView(product, setAddedProducts, addedProducts){
 }
 
 
-function AdminProductView(product, setOpenEdit, setOpenPriceHistory ,setNewProductQuantity, setNewProductPrice, setEditProductID){
+function AdminProductView(product, setOpenEdit, setOpenPriceHistory, setPriceHistoryProductID ,setNewProductQuantity, setNewProductPrice, setEditProductID){
   return(
   <TableRow key={product.id} sx={{background: product.archived?"gray":"white"}}>
     <TableCell align="left">{product.name}</TableCell>
@@ -55,6 +55,7 @@ function AdminProductView(product, setOpenEdit, setOpenPriceHistory ,setNewProdu
     <TableCell align="right">
           <Button sx={{borderRadius:"80vw", fontSize:"12px"}} variant="contained" onClick={()=>{
             setOpenPriceHistory(true)
+            setPriceHistoryProductID(product.id)
           }}>Historia Cen</Button>
       </TableCell>
     {product.archived ? null : <TableCell align="right">
@@ -90,7 +91,10 @@ function ProductTable(props) {
   const [editProductID, setEditProductID] = useState(null)
   const [editProductPrice, setEditProductPrice] = useState(0)
   const [editProductQuantity, setEditProductQuantity] = useState(0)
+  
+  const [priceHistoryProductID, setPriceHistoryProductID] = useState(1)
 
+  console.log("priceHistoryProductID: " + priceHistoryProductID) 
   useEffect(() => {
     let isMounted = true;
     getProducts(currentPage).then((data) => {
@@ -107,7 +111,7 @@ function ProductTable(props) {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <EditProductDialog open={openEdit} setOpen={setOpenEdit} id={editProductID} price={editProductPrice} quantity={editProductQuantity}/>
-      <PriceHistoryDialog open={openPriceHistory} setOpen={setOpenPriceHistory} />
+      <PriceHistoryDialog open={openPriceHistory} setOpen={setOpenPriceHistory} id={priceHistoryProductID}/>
       
       {addedProducts.length!= 0 && <ProductToOrder products={addedProducts} setAddedProducts={setAddedProducts}/>}
 
@@ -140,7 +144,7 @@ function ProductTable(props) {
                 }
                 else{
 
-                  return (AdminProductView(product, setOpenEdit, setOpenPriceHistory ,setEditProductQuantity, setEditProductPrice, setEditProductID));
+                  return (AdminProductView(product, setOpenEdit, setOpenPriceHistory , setPriceHistoryProductID ,setEditProductQuantity, setEditProductPrice, setEditProductID));
                 }
               }
             })}
