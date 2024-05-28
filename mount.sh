@@ -76,7 +76,7 @@ curl -c /tmp/cookies.txt -X 'POST' \
   "secondName": "Pączek",
   "password": "string",
   "type": "EMPLOYEE",
-  "address": "string"
+  "address": "Radom, po prostu Radom"
 }'
 
 #Addin products

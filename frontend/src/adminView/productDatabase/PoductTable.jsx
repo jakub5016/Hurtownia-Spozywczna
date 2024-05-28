@@ -111,9 +111,6 @@ function ProductTable(props) {
     };
   }, [currentPage]);
 
-  useEffect(()=>{
-    console.log(products)
-  }, [products])
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>

@@ -12,7 +12,6 @@ import ClientTable from "./clientDatabse/ClientTable";
 import OrderTable from "./orderDatabase/OrderTable";
 
 function AdminView(props) {
-  console.log(props.selectedSite);
   return props.logged && props.userType == "ADMIN" ? (
     <div className="container">
       {props.selectedSite == 1 ? (
