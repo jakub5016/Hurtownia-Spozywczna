@@ -9,6 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import getProducts from "./getProducts";
@@ -16,6 +17,7 @@ import addProduct from "./addProduct";
 import ProductToOrder from "./ProductToOrder";
 import EditProductDialog from "./EditProductDialog";
 import PriceHistoryDialog from "../priceDatabase/PriceHistoryDialog";
+import searchProducts from "./searchProducts";
 
 
 function UserProductView(product, setAddedProducts, addedProducts){
@@ -94,7 +96,6 @@ function ProductTable(props) {
   
   const [priceHistoryProductID, setPriceHistoryProductID] = useState(1)
 
-  console.log("priceHistoryProductID: " + priceHistoryProductID) 
   useEffect(() => {
     let isMounted = true;
     getProducts(currentPage).then((data) => {
@@ -107,6 +108,9 @@ function ProductTable(props) {
     };
   }, [currentPage]);
 
+  useEffect(()=>{
+    console.log(products)
+  }, [products])
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -114,7 +118,20 @@ function ProductTable(props) {
       <PriceHistoryDialog open={openPriceHistory} setOpen={setOpenPriceHistory} id={priceHistoryProductID}/>
       
       {addedProducts.length!= 0 && <ProductToOrder products={addedProducts} setAddedProducts={setAddedProducts}/>}
-
+      
+      <TextField 
+        label="Wyszukaj produkt" 
+        variant="filled" 
+        onChange={(e)=>{
+          let isMounted = true;
+          console.log(e.target.value)
+          searchProducts(e.target.value, currentPage).then((data) => {
+              setProducts(data);
+              console.log(data.content)
+          })
+        }}  
+      />
+      
       <TableContainer component={Paper} sx={{margin:"1vw", padding: "1vw", width: "80vw" }}>
         <Table>
           <TableHead>

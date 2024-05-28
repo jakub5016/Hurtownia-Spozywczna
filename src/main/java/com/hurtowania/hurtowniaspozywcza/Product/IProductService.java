@@ -11,7 +11,7 @@ public interface IProductService {
     // void deleteProduct(long productId);
     boolean makeArchived(long id);
     Product getProductById(long id);
-    List<Product> getProductByName(String name);
+    Page<Product> getProductByName(String name, int pageNo, int pageSize);
     boolean updateProductPriceById(long id, double price);
     boolean updateProductAmountById(long id, int amount);
     Page<Product> getProduct(int pageNo, int pageSize);
