@@ -19,7 +19,12 @@ function OrderTable(props) {
     const [selectedOrder, setSelectedOrder] = useState(0)
     
     useEffect(()=>{
-        getClientOrders(setOrders)
+        if (props.userType == "CLIENT"){
+            getClientOrders(setOrders)
+        }
+        else{
+            console.log(props.type)
+        }
     }, [])
     
 
