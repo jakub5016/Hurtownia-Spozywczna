@@ -50,8 +50,8 @@ public class ProductController {
     }
 
     @GetMapping("/") 
-    public ResponseEntity<Product> getProductByName(@RequestParam String name) {
-        Product product = productService.getProductByName(name);
+    public ResponseEntity<List<Product>> getProductByName(@RequestParam String name) {
+        List<Product> product = productService.getProductByName(name);
 
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
