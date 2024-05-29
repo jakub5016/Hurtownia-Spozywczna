@@ -27,7 +27,7 @@ public class Client {
     private String address;
 
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders;
 
     @OneToOne(mappedBy = "client", fetch = FetchType.LAZY)

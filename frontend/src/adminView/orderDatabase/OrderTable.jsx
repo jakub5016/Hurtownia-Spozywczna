@@ -46,6 +46,7 @@ function OrderTable(props) {
     const [openChangeStatus, setOpenChangeStatus] = useState(false)
 
     const [selectedOrder, setSelectedOrder] = useState(0)
+    const [statusSelectedOrder, setStatusSelectedOrder] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
     const [newStatus, setNewStatus] = useState("REJECTED")
 
@@ -91,7 +92,7 @@ function OrderTable(props) {
                                         <Button onClick={()=>{setOpen(true); setSelectedOrder(index)}} variant="contained">Szczegóły</Button>
                                 </TableCell>
                                 <TableCell sx={{textAlign:"center"}}>
-                                        <Button onClick={()=>{setOpenChangeStatus(true); setNewStatus("REJECTED") ;setSelectedOrder(element.id)}} variant="contained">Zmień status</Button>
+                                        <Button onClick={()=>{setOpenChangeStatus(true); setNewStatus("REJECTED") ;setStatusSelectedOrder(element.id)}} variant="contained">Zmień status</Button>
                                 </TableCell>
                             </TableRow>
                         )
@@ -127,7 +128,7 @@ function OrderTable(props) {
                             }
                         </select>
                         <Button variant="outlined" sx={{marginTop:"30px"}} onClick={()=>{
-                            changeOrderStatus(selectedOrder, newStatus)
+                            changeOrderStatus(statusSelectedOrder, newStatus)
                         }}>
                             Zaakceptuj zmiany
                         </Button>
