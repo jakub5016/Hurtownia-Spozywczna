@@ -56,6 +56,7 @@ public class AppUserController {
         UserDetailsDTO detailsDTO = UserDetailsDTO.builder()
                                                   .clientInfo(client)
                                                   .roles(roles)
+                                                  .username(username)
                                                   .build();
 
         return new ResponseEntity<>(detailsDTO, HttpStatus.OK);

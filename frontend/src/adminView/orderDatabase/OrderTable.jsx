@@ -91,9 +91,9 @@ function OrderTable(props) {
                                 <TableCell sx={{textAlign:"center"}}>
                                         <Button onClick={()=>{setOpen(true); setSelectedOrder(index)}} variant="contained">Szczegóły</Button>
                                 </TableCell>
-                                <TableCell sx={{textAlign:"center"}}>
+                                {props.userType != "CLIENT" ? <TableCell sx={{textAlign:"center"}}>
                                         <Button onClick={()=>{setOpenChangeStatus(true); setNewStatus("REJECTED") ;setStatusSelectedOrder(element.id)}} variant="contained">Zmień status</Button>
-                                </TableCell>
+                                </TableCell> : null}
                             </TableRow>
                         )
                     })

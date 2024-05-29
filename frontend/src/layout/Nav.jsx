@@ -27,7 +27,7 @@ function Nav(props){
             <div style={{textAlign:"right"}}> 
                 {props.logged ? 
                     <div style={{display:"flex"}}>
-                    <IconButton>
+                    <IconButton onClick={()=>{navigate("/user")}}>
                         <AccountCircleIcon sx={{fontSize:"40px"}}/>
                     </IconButton>
                     <IconButton onClick={()=>{logout(navigate)}}>

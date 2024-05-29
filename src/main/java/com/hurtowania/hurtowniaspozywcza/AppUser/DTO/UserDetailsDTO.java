@@ -17,4 +17,5 @@ import lombok.Setter;
 public class UserDetailsDTO {
     private GetClientDTO clientInfo;
     private List<String> roles;
+    private String username;
 }
