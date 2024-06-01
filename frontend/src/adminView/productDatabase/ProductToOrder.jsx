@@ -19,17 +19,18 @@ const WhiteBackgroundTextField = styled(TextField)({
   },
 });
 
-function handleChange(index, value, max, ammoutArray, setAmmoutArray) {
+function handleChange(index, value, max, ammoutArray, setAmmoutArray, setAddAvalible) {
   let valueToSet = parseInt(value, 10);
   if (isNaN(valueToSet) || valueToSet < 1) {
     valueToSet = 0;
   }
 
-  if (valueToSet <= max) {
-    const newArray = [...ammoutArray];
-    newArray[index] = valueToSet;
-    setAmmoutArray(newArray);
-  } else {
+  const newArray = [...ammoutArray];
+  newArray[index] = valueToSet;
+  setAmmoutArray(newArray);
+
+  if (valueToSet > max) {
+    setAddAvalible(false)
     alert("Podana wartość jest niepoprawna, zmień ją, inaczej nie będziesz mógł kontynuować zamówienia");
   }
 }
@@ -37,7 +38,7 @@ function handleChange(index, value, max, ammoutArray, setAmmoutArray) {
 
 function ProductToOrder(props) {
   const [ammoutArray, setAmmoutArray] = useState(new Array(props.products.length).fill(1));
-
+  const [addAvalible, setAddAvalible] = useState(true)
   useEffect(() => {
     if (props.products.length > ammoutArray.length) {
       setAmmoutArray([...ammoutArray, ...new Array(props.products.length - ammoutArray.length).fill(1)]);
@@ -48,6 +49,20 @@ function ProductToOrder(props) {
     return acc + (product.price.price * ammoutArray[index]);
   }, 0);
 
+
+  useEffect(()=>{
+    let correct = true;
+
+    ammoutArray.map((elem, index) =>{
+
+      if ((elem) > props.products[index].availableQuantity){
+        correct = false
+      }
+      console.log(elem, props.products[index].availableQuantity)
+    })
+    correct ? setAddAvalible(true) : setAddAvalible(false) 
+
+  }, [ammoutArray])
 
   return (
     <TableContainer component={Paper} sx={{ margin: "1vw", padding: "1vw", width: "80vw", background: "#1976d2", color: "white" }}>
@@ -83,7 +98,7 @@ function ProductToOrder(props) {
                     defaultValue={1}
                     inputProps={{ type: 'number', max: product.availableQuantity, min: 1 }}
                     size="small"
-                    onChange={(e) => { handleChange(index, e.target.value, product.availableQuantity, ammoutArray, setAmmoutArray) }}
+                    onChange={(e) => {handleChange(index, e.target.value, product.availableQuantity, ammoutArray, setAmmoutArray, setAddAvalible) }}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -120,6 +135,7 @@ function ProductToOrder(props) {
       </Table>
       <div style={{ marginTop: "20px" }}>
         <Button 
+            disabled={!addAvalible}
             sx={{ backgroundColor: "white", "&:hover": { backgroundColor: "white !important" } }} 
             variant="outlined"
             onClick={()=>{
