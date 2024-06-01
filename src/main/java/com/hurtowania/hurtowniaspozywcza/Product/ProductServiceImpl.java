@@ -99,6 +99,13 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public Page<Product> getProductByCategory(ProductCategory category, int pageNo, int pageSize){
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Product> page = productRepository.findByCategory(category, pageable);
+
+        return page;
+    }
+    @Override
     public boolean updateProductPriceById(long id, double price) {
         Product product = productRepository.findById(id).orElse(null);
         if (product != null) {

@@ -60,6 +60,16 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @GetMapping("/category/")
+    public ResponseEntity<Page<Product>> getProductByCategory(
+            @RequestParam ProductCategory category, @RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize
+    ) {
+        Page<Product> product = productService.getProductByCategory(category, pageNo, pageSize);
+
+
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}/price")
     public ResponseEntity<ReturnBothPriceDTO> getPriceByProductId(@PathVariable long id) {
         Product product = productService.getProductById(id);

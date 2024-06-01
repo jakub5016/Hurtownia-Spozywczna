@@ -23,8 +23,9 @@ public class Product {
     
     @Column(nullable = false)
     private int availableQuantity;
-    
+
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ProductCategory category;
     
     @Column(nullable = false)
