@@ -7,11 +7,13 @@ function PriceHistoryDialog(props){
     
     useEffect(()=>{
         getPriceHistory(props.id).then(data=>{
-            setPriceHist(data)
+            if (data.length != 0){
+                setPriceHist(data)                
+            }
         })
     }, [props.id])
 
-
+    console.log(priceHist)
     return(
         <Dialog open={props.open} onClose={()=>{props.setOpen(false)}}>
             <Table sx={{width:"30vw"}}>
