@@ -13,6 +13,7 @@ async function login(login, password, setLogged, navigate){
         console.log(resp)   
         if (!resp.ok){
             if (resp.status == 401){
+                alert("Złe dane logowania, spróbuj ponownie")
                 return false
             }
             else{
@@ -27,7 +28,7 @@ async function login(login, password, setLogged, navigate){
         }
         
     }).catch(err=>{
-        console.error("Got en error :" + err)
+        alert("Nie udało się połączyć z serwerem, spróbuj ponownie później")
     })
 }
 
