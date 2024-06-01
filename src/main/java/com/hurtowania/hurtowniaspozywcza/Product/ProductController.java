@@ -49,19 +49,18 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @GetMapping("/") 
+    @GetMapping("/")
     public ResponseEntity<Page<Product>> getProductByName(
-        @RequestParam String name, @RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize
-        ) {
+            @RequestParam String name, @RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize
+    ) {
         Page<Product> product = productService.getProductByName(name, pageNo, pageSize);
 
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    
+
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
-
     @GetMapping("/category/")
     public ResponseEntity<Page<Product>> getProductByCategory(
             @RequestParam ProductCategory category, @RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize
