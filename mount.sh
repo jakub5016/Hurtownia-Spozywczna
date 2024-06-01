@@ -7,11 +7,50 @@ curl -c /tmp/cookies.txt -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "userName": "admin",
-  "firstName": "string",
-  "secondName": "string",
+  "firstName": "Janusz",
+  "secondName": "Kiełbasa",
   "password": "string",
   "type": "ADMIN",
-  "address": "string"
+  "address": "Aleja Hogwartu 1, Hogsmeade"
+}'
+
+curl -c /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/auth/register' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "userName": "user2",
+  "firstName": "Patryk",
+  "secondName": "Woziński",
+  "password": "string",
+  "type": "CLIENT",
+  "address": "Melina 4, Mordor"
+}'
+
+curl -c /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/auth/register' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "userName": "user3",
+  "firstName": "Karyna",
+  "secondName": "Krwiak",
+  "password": "string",
+  "type": "CLIENT",
+  "address": "Ciemna Ulica 5, Gotham"
+}'
+
+curl -c /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/auth/register' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "userName": "user4",
+  "firstName": "Brajan",
+  "secondName": "Krwawy",
+  "password": "string",
+  "type": "CLIENT",
+  "address": "Aleja Przemocy 6, Vice City"
 }'
 
 curl -X 'POST' \
@@ -20,13 +59,25 @@ curl -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "userName": "user",
-  "firstName": "string",
-  "secondName": "string",
+  "firstName": "Sergiusz",
+  "secondName": "Górski",
   "password": "string",
   "type": "CLIENT",
-  "address": "string"
+  "address": "Aleja Willy Wonki 3, Madryt, Hiszpania"
 }'
 
+curl -c /tmp/cookies.txt -X 'POST' \
+  'http://localhost:8080/auth/register' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "userName": "emp",
+  "firstName": "Grażyna",
+  "secondName": "Pączek",
+  "password": "string",
+  "type": "EMPLOYEE",
+  "address": "Radom, po prostu Radom"
+}'
 
 #Addin products
 curl -b /tmp/cookies.txt -X 'POST' \
@@ -567,3 +618,24 @@ curl -b /tmp/cookies.txt -X 'POST' \
     }
   ]
 }'
+
+for i in {1..10}
+do
+    curl -b /tmp/cookies.txt -X 'POST' \
+      'http://localhost:8080/order' \
+      -H 'accept: */*' \
+      -H 'Content-Type: application/json' \
+      -d '{
+      "clientId": '$((RANDOM % 5 + 1))',
+      "orderedProducts": [
+        {
+          "productId": '$((RANDOM % 50 + 1))',
+          "quantity": '$((RANDOM % 10 + 1))'
+        },
+        {
+          "productId": '$((RANDOM % 50 + 1))',
+          "quantity": '$((RANDOM % 10 + 1))'
+        }
+      ]
+    }'
+done

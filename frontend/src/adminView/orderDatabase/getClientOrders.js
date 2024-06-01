@@ -12,7 +12,7 @@ async function getClientOrders(setOrders){
             }
         );
         let json = await resp.json();
-        setOrders(json);
+        setOrders({content:json});
     } catch (error) {
         console.error("Fetch error:", error);
     }

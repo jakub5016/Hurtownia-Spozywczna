@@ -12,7 +12,6 @@ import ClientTable from "./clientDatabse/ClientTable";
 import OrderTable from "./orderDatabase/OrderTable";
 
 function AdminView(props) {
-  console.log(props.selectedSite);
   return props.logged && props.userType == "ADMIN" ? (
     <div className="container">
       {props.selectedSite == 1 ? (
@@ -20,7 +19,7 @@ function AdminView(props) {
       ) : props.selectedSite == 2 ? (
         <ClientTable userType="ADMIN" />
       ) : (
-        <OrderTable userType="ADMIN" />
+        <OrderTable type="all" userType="ADMIN" />
       )}
     </div>
   ) : null;

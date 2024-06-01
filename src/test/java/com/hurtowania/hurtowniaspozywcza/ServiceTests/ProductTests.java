@@ -146,9 +146,9 @@ public class ProductTests {
 
     Pageable pageable = PageRequest.of(0, 1);
 
-    when(productRepository.findByNameContainingIgnoreCase(pageable, productName)).thenReturn(new PageImpl<>(Collections.singletonList(product), pageable, 1));
+    when(productRepository.findByNameContainingIgnoreCase(productName, pageable)).thenReturn(new PageImpl<>(Collections.singletonList(product), pageable, 1));
 
-    Page<Product> retrievedProductPage = productService.getProductByName(0, 1, productName);
+    Page<Product> retrievedProductPage = productService.getProductByName(productName, 0, 1);
 
     assertEquals(1, retrievedProductPage.getContent().size());
     assertEquals(product, retrievedProductPage.getContent().get(0));
@@ -160,9 +160,9 @@ public class ProductTests {
 
         Pageable pageable = PageRequest.of(0, 1);
     
-        when(productRepository.findByNameContainingIgnoreCase(pageable, productName)).thenReturn(new PageImpl<>(Collections.emptyList()));
+        when(productRepository.findByNameContainingIgnoreCase(productName, pageable)).thenReturn(new PageImpl<>(Collections.emptyList()));
     
-        Page<Product> retrievedProductPage = productService.getProductByName(0, 1, productName);
+        Page<Product> retrievedProductPage = productService.getProductByName(productName, 0, 1);
     
         assertTrue(retrievedProductPage.isEmpty());
     }

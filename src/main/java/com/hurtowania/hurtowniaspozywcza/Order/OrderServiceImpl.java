@@ -91,6 +91,9 @@ public class OrderServiceImpl implements IOrderService {
         Order order = orderRepository.findById(id).orElse(null);
         if (order != null) {
             order.setStatus(OrderStatus.valueOf(String.valueOf(status)));
+            if (status == OrderStatus.FINALIZED){
+                order.setDeliveryDate(LocalDate.now());
+            }
             orderRepository.save(order);
             return true;
         }
@@ -98,9 +101,18 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public Page<Order> getOrder(int pageNo, int pageSize) {
+    public Page<Order> getOrder(int pageNo, int pageSize, String type) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        return orderRepository.findAll(pageable);
+        
+        if ("all".equalsIgnoreCase(type)) {
+            return orderRepository.findAll(pageable);
+        } else if ("current".equalsIgnoreCase(type)) {
+            List<OrderStatus> statuses = Arrays.asList(OrderStatus.CREATED, OrderStatus.IN_DELIVERY, OrderStatus.IN_PROGRESS, OrderStatus.ACCEPTED);
+            return orderRepository.findByStatusIn(statuses, pageable);
+        } else {
+            List<OrderStatus> statuses = Arrays.asList(OrderStatus.CANCELLED, OrderStatus.FINALIZED, OrderStatus.REJECTED);
+            return orderRepository.findByStatusIn(statuses, pageable);
+        }
     }
     
 }

@@ -12,7 +12,6 @@ public interface IProductService {
     boolean makeArchived(long id);
     Product getProductById(long id);
     Page<Product> getProductByName(int pageNo, int pageSize, String name);
-    Page<Product> getProductByCategory(ProductCategory category, int pageNo, int pageSize);
     boolean updateProductPriceById(long id, double price);
     boolean updateProductAmountById(long id, int amount);
     Page<Product> getProduct(int pageNo, int pageSize);

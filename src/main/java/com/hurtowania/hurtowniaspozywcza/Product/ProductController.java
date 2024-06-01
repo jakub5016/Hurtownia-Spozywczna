@@ -50,10 +50,12 @@ public class ProductController {
     }
 
     @GetMapping("/") 
-    public ResponseEntity<Page<Product>> getProductByName(@RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize,@RequestParam String name) {
-        Page<Product> product = productService.getProductByName(pageNo, pageSize, name);
-    
-        if (product.isEmpty()) {
+    public ResponseEntity<Page<Product>> getProductByName(
+        @RequestParam String name, @RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "10", required = false) int pageSize
+        ) {
+        Page<Product> product = productService.getProductByName(name, pageNo, pageSize);
+
+        if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     
