@@ -5,10 +5,13 @@ import com.hurtowania.hurtowniaspozywcza.AppUser.IAppUserService;
 import com.hurtowania.hurtowniaspozywcza.AppUser.UserType;
 import com.hurtowania.hurtowniaspozywcza.Client.requests.CreateClientRequest;
 import com.hurtowania.hurtowniaspozywcza.Client.requests.GetClientDTO;
+import com.hurtowania.hurtowniaspozywcza.Order.IOrderService;
+import com.hurtowania.hurtowniaspozywcza.Order.Order;
 import com.hurtowania.hurtowniaspozywcza.Product.Product;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -21,7 +24,7 @@ import org.springframework.stereotype.Service;
 public class ClientServiceImpl implements IClientService {
     private final ClientRepository clientRepository;
     private final IAppUserService appUserService;
-
+    private final IOrderService orderService;
 
     @Override
     public void createClient(CreateClientRequest request) {
@@ -45,13 +48,21 @@ public class ClientServiceImpl implements IClientService {
     @Override
     public void deleteClient(long clientId) {
         Client client = clientRepository.findById(clientId).orElse(null);
-        if (client != null){
-            clientRepository.delete(client);
+        if (client != null) {
+            // Delete orders associated with the client
+            List<Order> orders = client.getOrders();
+            for (Order order : orders) {
+                orderService.deleteOrder(order.getId());
+            }
+            
+            // Delete the associated AppUser
             appUserService.delete(client.getAppUser());
-
+    
+            // Finally, delete the client
+            clientRepository.delete(client);
         }
-
     }
+    
 
     @Override
     public GetClientDTO getClientById(long id){

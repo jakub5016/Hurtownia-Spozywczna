@@ -9,18 +9,56 @@ import {
   TableRow,
   TableBody,
   useThemeProps,
+  Pagination,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import getClientOrders from "./getClientOrders.js"
+import getAllOrders from "./getAllOrdes.js";
+import changeOrderStatus from "./changeOrderStatus.js";
+
+
+const orderStates = {
+    REJECTED: "Odrzucone",
+    FINALIZED: "Zakończone",
+    ACCEPTED: "Zaakceptowane",
+    IN_PROGRESS: "W trakcie realizacji",
+    CREATED: "Utworzone",
+    IN_DELIVERY: "W dostawie",
+    CANCELLED: "Anulowane"
+};
+
+
+const orderStatusColors = {
+    REJECTED: '#F5A9A9',
+    FINALIZED: '#A9F5A9',
+    ACCEPTED: '#A9F5A9',
+    IN_PROGRESS: '#A9D0F5',
+    CREATED: '#F5F5A9',
+    IN_DELIVERY: '#A9F5E1',
+    CANCELLED: '#F5A9A9'
+};
+
 
 function OrderTable(props) {
-    const [orders, setOrders] = useState([{orderedProducts:[]}])
-    const [open, setOpen] = useState(false)
-    const [selectedOrder, setSelectedOrder] = useState(0)
+    const [orders, setOrders] = useState({content:[{client:{name:"", address:""}, orderedProducts:[]}]})
     
+    const [open, setOpen] = useState(false)
+    const [openChangeStatus, setOpenChangeStatus] = useState(false)
+
+    const [selectedOrder, setSelectedOrder] = useState(0)
+    const [statusSelectedOrder, setStatusSelectedOrder] = useState(0)
+    const [currentPage, setCurrentPage] = useState(0)
+    const [newStatus, setNewStatus] = useState("REJECTED")
+
+
     useEffect(()=>{
-        getClientOrders(setOrders)
-    }, [])
+        if (props.userType == "CLIENT"){
+            getClientOrders(setOrders)
+        }
+        else{
+            getAllOrders(props.type, setOrders, currentPage)
+        }
+    }, [props.type, currentPage])
     
 
   return (
@@ -42,17 +80,20 @@ function OrderTable(props) {
           </TableHead>
           <TableBody>
                 {
-                    orders.map((element, index) => {
+                    orders.content.map((element, index) => {
                         return(
-                            <TableRow key={index}>
+                            <TableRow sx={{ backgroundColor: orderStatusColors[element.status] }} key={index}>
                                 <TableCell sx={{textAlign:"left"}}>{element.id}</TableCell>
                                 <TableCell sx={{textAlign:"right"}}>{element.orderDate}</TableCell>
                                 <TableCell sx={{textAlign:"right"}}>{element.deliveryDate == null? "---" : element.deliveryDate}</TableCell>
-                                <TableCell sx={{textAlign:"right"}}>{element.status}</TableCell>
+                                <TableCell sx={{textAlign:"right"}}>{orderStates[element.status]}</TableCell>
                                 <TableCell sx={{textAlign:"right"}}>{element.totalPrice + " zł"}</TableCell>
                                 <TableCell sx={{textAlign:"center"}}>
                                         <Button onClick={()=>{setOpen(true); setSelectedOrder(index)}} variant="contained">Szczegóły</Button>
                                 </TableCell>
+                                {props.userType != "CLIENT" ? <TableCell sx={{textAlign:"center"}}>
+                                        <Button onClick={()=>{setOpenChangeStatus(true); setNewStatus("REJECTED") ;setStatusSelectedOrder(element.id)}} variant="contained">Zmień status</Button>
+                                </TableCell> : null}
                             </TableRow>
                         )
                     })
@@ -60,8 +101,66 @@ function OrderTable(props) {
           </TableBody>
         </Table>
       </TableContainer>
+      {props.userType != "CLIENT" ? <Pagination
+        sx={{ margin: "0 auto", marginTop:"30px" }}
+        color="primary"
+        count={orders.totalPages}
+        onChange={(event, page)=>{setCurrentPage(page-1)}}
+      />:null}
 
+    {/* Zmien status zamówienia */}
+      <Dialog open={openChangeStatus} onClose={()=>{setOpenChangeStatus(false)}} sx={{padding:"1vw"}}>
+                {
+                    props.userType != "CLIENT"?
+                    <div style={{padding:"2vw", display:"flex", flexDirection:"column"}}>
+                        <h1 style={{marginBottom:"60px"}}>
+                            Wybierz nowy status zamówienia 
+                        </h1>
+                        <select style={{fontSize: "20px" }} onChange={(e)=>{setNewStatus(e.target.value);console.log(e.target.value)}}>
+                            {
+                                Object.keys(orderStates).map(key=>{
+                                    return(
+                                        <option value={key} key={key}>
+                                            {orderStates[key]}
+                                        </option>
+                                    )
+                                })
+                            }
+                        </select>
+                        <Button variant="outlined" sx={{marginTop:"30px"}} onClick={()=>{
+                            changeOrderStatus(statusSelectedOrder, newStatus)
+                        }}>
+                            Zaakceptuj zmiany
+                        </Button>
+                    </div>
+                    :null
+                }
+      </Dialog>
+    
+    
+    {/* Zobacz szczegóły zamówienia */}
       <Dialog open={open} onClose={()=>{setOpen(false)}} sx={{padding:"1vw"}}>
+            {
+                props.userType != "CLIENT"?
+                <div >
+                    <h1>
+                        Dane klienta
+                    </h1>
+
+                    <h3>
+                        Imię i nazwisko:  <a style={{fontWeight:"normal", textAlign:"left", paddingLeft:"30px"}}>
+                        {orders.content[selectedOrder].client.name}
+                        </a>
+                    </h3>
+                    <h3>
+                        Adres:  <a style={{fontWeight:"normal", textAlign:"left", paddingLeft:"30px"}}>
+                        {orders.content[selectedOrder].client.address}
+                        </a>
+                    </h3>
+                </div>
+                : null 
+            }
+
             <h1>Zamówione produkty</h1>
             <Table>
                 <TableHead>
@@ -81,9 +180,9 @@ function OrderTable(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {
-                        orders.length != 0 &&
-                        orders[selectedOrder].orderedProducts.map((element, index)=>{
+                    {   
+                        orders.content.length > 0  && 
+                        orders.content[selectedOrder].orderedProducts.map((element, index)=>{
                             return(
                                 <TableRow key={index}>
                                     <TableCell sx={{textAlign:"left"}}>
@@ -111,7 +210,7 @@ function OrderTable(props) {
                         <TableCell>
                         </TableCell>
                         <TableCell sx={{textAlign:"right", color:"green"}}>
-                            {orders.length != 0 && orders[selectedOrder].totalPrice + " zł"}
+                            {orders.content.length != 0 && orders.content[selectedOrder].totalPrice + " zł"}
                         </TableCell>
                     </TableRow>
                 </TableBody>

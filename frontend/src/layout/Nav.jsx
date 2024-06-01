@@ -16,7 +16,7 @@ function Nav(props){
             {props.logged ?
             props.userType == "ADMIN" ?
             <AdminNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/> :  
-            props.userType == "EMPLOYEE "  ? 
+            props.userType == "EMPLOYEE"  ? 
             <StorekeeperNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/>: 
             props.userType == "CLIENT"  ? 
             <ClientNav selectedSite={props.selectedSite} setSelectedSite={props.setSelectedSite}/>
@@ -27,7 +27,7 @@ function Nav(props){
             <div style={{textAlign:"right"}}> 
                 {props.logged ? 
                     <div style={{display:"flex"}}>
-                    <IconButton>
+                    <IconButton onClick={()=>{navigate("/user")}}>
                         <AccountCircleIcon sx={{fontSize:"40px"}}/>
                     </IconButton>
                     <IconButton onClick={()=>{logout(navigate)}}>

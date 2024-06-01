@@ -11,6 +11,7 @@ import BasicView from './BasicView.jsx';
 import Register from './register/Register.jsx';
 import PrivacyPolitics from './privacy/PrivacyPolitics.jsx';
 import authourize from './auth/authorize.js'
+import UserInfo from './userInfo/UserInfo.jsx';
 
 
 function Main() {
@@ -64,6 +65,15 @@ function Main() {
               // Step 3: Pass state and setter as props
               <Layout logged={logged} setLogged={setLogged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
                 <AdminView logged={logged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}/>
+              </Layout>
+            }
+          />
+          <Route
+            path="/user"
+            element={ // Use the Layout component as the wrapper for the App component
+              // Step 3: Pass state and setter as props
+              <Layout logged={logged} setLogged={setLogged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
+                <UserInfo/>
               </Layout>
             }
           />

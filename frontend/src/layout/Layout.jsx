@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Layout = ({ children, logged, setLogged, userType, selectedSite, setSelectedSite }) => {
-  console.log(userType)
     return (
       <div>
           <Nav 

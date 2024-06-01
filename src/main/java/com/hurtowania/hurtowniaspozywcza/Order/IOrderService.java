@@ -13,5 +13,5 @@ public interface IOrderService {
     Order getOrderById(long id);
     List<Order> getOrdersByClientId(long clientId);
     boolean updateOrderStatusById(long id, OrderStatus status);
-    Page<Order> getOrder(int pageNo, int pageSize);
+    Page<Order> getOrder(int pageNo, int pageSize, String type);
 }

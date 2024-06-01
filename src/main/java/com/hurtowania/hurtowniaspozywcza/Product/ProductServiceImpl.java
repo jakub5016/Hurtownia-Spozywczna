@@ -92,9 +92,10 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Page<Product> getProductByName(int pageNo, int pageSize, String name){
+    public Page<Product> getProductByName(String name, int pageNo, int pageSize){
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<Product> page = productRepository.findByNameContainingIgnoreCase(pageable, name);
+        Page<Product> page = productRepository.findByNameContainingIgnoreCase(name, pageable);
+
         return page;
     }
 
