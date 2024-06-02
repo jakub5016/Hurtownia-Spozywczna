@@ -81,21 +81,24 @@ function OrderTable(props) {
           <TableBody>
                 {
                     orders.content.map((element, index) => {
-                        return(
-                            <TableRow sx={{ backgroundColor: orderStatusColors[element.status] }} key={index}>
-                                <TableCell sx={{textAlign:"left"}}>{element.id}</TableCell>
-                                <TableCell sx={{textAlign:"right"}}>{element.orderDate}</TableCell>
-                                <TableCell sx={{textAlign:"right"}}>{element.deliveryDate == null? "---" : element.deliveryDate}</TableCell>
-                                <TableCell sx={{textAlign:"right"}}>{orderStates[element.status]}</TableCell>
-                                <TableCell sx={{textAlign:"right"}}>{element.totalPrice + " zł"}</TableCell>
-                                <TableCell sx={{textAlign:"center"}}>
-                                        <Button onClick={()=>{setOpen(true); setSelectedOrder(index)}} variant="contained">Szczegóły</Button>
-                                </TableCell>
-                                {props.userType != "CLIENT" ? <TableCell sx={{textAlign:"center"}}>
-                                        <Button onClick={()=>{setOpenChangeStatus(true); setNewStatus("REJECTED") ;setStatusSelectedOrder(element.id)}} variant="contained">Zmień status</Button>
-                                </TableCell> : null}
-                            </TableRow>
-                        )
+                        console.log(element)
+                        if (element.orderedProducts.length != 0){
+                            return(
+                                <TableRow sx={{ backgroundColor: orderStatusColors[element.status] }} key={index}>
+                                    <TableCell sx={{textAlign:"left"}}>{element.id}</TableCell>
+                                    <TableCell sx={{textAlign:"right"}}>{element.orderDate}</TableCell>
+                                    <TableCell sx={{textAlign:"right"}}>{element.deliveryDate == null? "---" : element.deliveryDate}</TableCell>
+                                    <TableCell sx={{textAlign:"right"}}>{orderStates[element.status]}</TableCell>
+                                    <TableCell sx={{textAlign:"right"}}>{element.totalPrice + " zł"}</TableCell>
+                                    <TableCell sx={{textAlign:"center"}}>
+                                            <Button onClick={()=>{setOpen(true); setSelectedOrder(index)}} variant="contained">Szczegóły</Button>
+                                    </TableCell>
+                                    {props.userType != "CLIENT" ? <TableCell sx={{textAlign:"center"}}>
+                                            <Button onClick={()=>{setOpenChangeStatus(true); setNewStatus("REJECTED") ;setStatusSelectedOrder(element.id)}} variant="contained">Zmień status</Button>
+                                    </TableCell> : null}
+                                </TableRow>
+                            )
+                        }
                     })
                 }
           </TableBody>

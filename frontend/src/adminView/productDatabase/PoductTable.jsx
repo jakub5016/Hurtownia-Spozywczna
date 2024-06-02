@@ -1,8 +1,11 @@
 import {
   Button,
   Dialog,
+  InputLabel,
+  MenuItem,
   Pagination,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -18,6 +21,7 @@ import ProductToOrder from "./ProductToOrder";
 import EditProductDialog from "./EditProductDialog";
 import PriceHistoryDialog from "../priceDatabase/PriceHistoryDialog";
 import searchProducts from "./searchProducts";
+import getProductsCategory from "./getProductsCategory";
 
 
 function UserProductView(product, setAddedProducts, addedProducts){
@@ -86,7 +90,8 @@ function ProductTable(props) {
   const [openPriceHistory, setOpenPriceHistory] = useState(false)
 
   const [currentPage, setCurrentPage] = useState(0)
-  
+  const [fetchCategory, setFetchCategory] = useState("")
+
   const [newProductPrice, setNewProductPrice] = useState(0)
   const [newProductName, setNewProductName] = useState("")
   const [newProductCategory, setNewProductCategory] = useState("")
@@ -99,18 +104,31 @@ function ProductTable(props) {
   
   const [priceHistoryProductID, setPriceHistoryProductID] = useState(1)
 
-  useEffect(() => {
-    let isMounted = true;
-    getProducts(currentPage).then((data) => {
-      if (isMounted) {
-        setProducts(data);
-      }
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, [currentPage]);
+  useEffect(()=>{
+    if (fetchCategory != ""){
+      let isMounted = true;
+      getProductsCategory(fetchCategory, currentPage).then((data) => {
+        if (isMounted) {
+          setProducts(data);
+        }
+      });
+      return () => {
+        isMounted = false;
+      };
+    } 
+    else{
+      let isMounted = true;
+      getProducts(currentPage).then((data) => {
+        if (isMounted) {
+          setProducts(data);
+        }
+      });
+      return () => {
+        isMounted = false;
+      };
+    }
 
+  }, [fetchCategory, currentPage])
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -143,8 +161,63 @@ function ProductTable(props) {
                 Ilość dostępna w magazynie
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                Kategoria
-              </TableCell>
+              <select label="Kategoria" onChange={(e)=>{setFetchCategory(e.target.value)}}>
+                    <option value="">Kategoria</option>
+                        <optgroup label="Artykuły spożywcze">
+                            <option value="WARZYWA_I_OWOCE">Warzywa i owoce</option>
+                            <option value="PIECZYWO">Pieczywo</option>
+                            <option value="NABIAL">Nabiał</option>
+                            <option value="MIESO_I_WEDLINY">Mięso i wędliny</option>
+                            <option value="RYBY_I_OWOCE_MORZA">Ryby i owoce morza</option>
+                            <option value="MROZONKI">Mrożonki</option>
+                            <option value="KONSERWY">Konserwy</option>
+                            <option value="PRODUKTY_SYPKIE">Produkty sypkie</option>
+                            <option value="PRZYPRAWY_I_ZIOLA">Przyprawy i zioła</option>
+                            <option value="SLODYCZE_I_PRZEKASKI">Słodycze i przekąski</option>
+                            <option value="NAPOJE_BEZALKOHOLOWE">Napoje bezalkoholowe</option>
+                            <option value="NAPOJE_ALKOHOLOWE">Napoje alkoholowe</option>
+                            <option value="OLEJE_I_TLUSZCZE">Oleje i tłuszcze</option>
+                            <option value="PRODUKTY_DIETETYCZNE_I_EKOLOGICZNE">Produkty dietetyczne i ekologiczne</option>
+                            <option value="PRODUKTY_BEZGLUTENOWE">Produkty bezglutenowe</option>
+                            <option value="KAWA_HERBATA_I_KAKAO">Kawa, herbata i kakao</option>
+                            <option value="SOSY_I_DRESSINGI">Sosy i dressingi</option>
+                            <option value="PRZETWORY_OWOCOWE_I_WARZYWNE">Przetwory owocowe i warzywne</option>
+                            <option value="PIECZYWO_CHRUPKIE_I_SUCHARKI">Pieczywo chrupkie i sucharki</option>
+                            <option value="ZUPY_INSTANT_I_DANIA_GOTOWE">Zupy instant i dania gotowe</option>
+                            <option value="PLATKI_SNIADANIOWE_I_MUSLI">Płatki śniadaniowe i musli</option>
+                            <option value="PRODUKTY_DLA_DZIECI">Produkty dla dzieci</option>
+                            <option value="PRZEKASKI_NA_WYNOS">Przekąski na wynos</option>
+                            <option value="ARTYKULY_CUKIERNICZE">Artykuły cukiernicze</option>
+                            <option value="ARTYKULY_SNIADANIOWE">Artykuły śniadaniowe</option>
+                        </optgroup>
+                        <optgroup label="Artykuły budowlane">
+                            <option value="SRUBY">Śruby</option>
+                            <option value="NAKRETKI">Nakrętki</option>
+                            <option value="PODKLADKI">Podkładki</option>
+                            <option value="KRZYZAKI_DO_GLAZURY">Krzyżaki do glazury</option>
+                            <option value="WKRETY">Wkręty</option>
+                            <option value="KOLKI_ROZPOROWE">Kołki rozporowe</option>
+                            <option value="GWOZDZIE">Gwoździe</option>
+                            <option value="NITY">Nity</option>
+                            <option value="KLEJE_I_SILIKONY">Kleje i silikony</option>
+                            <option value="TASMY_BUDOWLANE">Tasmy budowlane</option>
+                            <option value="NARZEDZIA_RECZNE">Narzędzia ręczne</option>
+                            <option value="NARZEDZIA_ELEKTRYCZNE">Narzędzia elektryczne</option>
+                            <option value="DRABINY_I_RUSZTOWANIA">Drabiny i rusztowania</option>
+                            <option value="MATERIALY_IZOLACYJNE">Materiały izolacyjne</option>
+                            <option value="USZCZELKI_I_PROFILE">Uszczelki i profile</option>
+                            <option value="FARBY_I_LAKIERY">Farby i lakiery</option>
+                            <option value="WALKI_I_PEDZLE_MALARSKIE">Wałki i pędzle malarskie</option>
+                            <option value="OSWIETLENIE">Oświetlenie</option>
+                            <option value="AKCESORIA_ELEKTRYCZNE">Akcesoria elektryczne</option>
+                            <option value="PRZEDLUZACZE_I_LISTWY_ZASILAJACE">Przedłużacze i listwy zasilające</option>
+                            <option value="RURY_I_ZLACZKI_HYDRAULICZNE">Rury i złączki hydrauliczne</option>
+                            <option value="KRANY_I_BATERIE_LAZIENKOWE">Kran i baterie łazienkowe</option>
+                            <option value="WENTYLATORY_I_KLIMATYZATORY">Wentylatory i klimatyzatory</option>
+                            <option value="PANELE_PODLOGOWE_I_LISTWY_PRZYPODLOGOWE">Panele podłogowe i listwy przypodłogowe</option>
+                            <option value="MATERIALY_WYKONCZENIOWE">Materiały wykończeniowe</option>
+                        </optgroup>
+                    </select>              </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 Najniższa cena z ostatnich 30 dni
               </TableCell>
