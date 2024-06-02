@@ -55,7 +55,7 @@ function ProductToOrder(props) {
 
     ammoutArray.map((elem, index) =>{
 
-      if ((elem) > props.products[index].availableQuantity){
+      if (((elem) > props.products[index].availableQuantity) || (elem == 0)){
         correct = false
       }
       console.log(elem, props.products[index].availableQuantity)
