@@ -4,7 +4,6 @@ async function authourize(setUserType, setLogged){
         credentials:"include"
     }).then(async (resp)=>{
         if (resp.status == 401){
-            alert("Złe dane logowania, spróbuj ponownie")
             setLogged(false)
             console.log("Not logged")
         }

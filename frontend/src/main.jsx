@@ -31,7 +31,7 @@ function Main() {
             path="/"
             element={ // Use the Layout component as the wrapper for the App component
               <Layout logged={logged} setLogged={setLogged} userType={userType} selectedSite={selectedSite} setSelectedSite={setSelectedSite}>
-                <BasicView/>
+                <BasicView logged={logged}/>
               </Layout>
             }
           />

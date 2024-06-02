@@ -11,9 +11,7 @@ function Register(){
     const [adress, setAdress] = useState("")
     const [registered, setRegistered] = useState(false)
     const navigate = useNavigate()
-    useEffect(()=>{
-        console.log(registered)
-    }, [registered])
+ 
 
     return(
         <div className='container'>

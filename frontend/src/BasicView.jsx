@@ -1,7 +1,7 @@
 import { Paper } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 
-function BasicView(){
+function BasicView(props){
     const navigate = useNavigate()
     return(
         <Paper sx={{padding:"1vw"}}>
@@ -11,9 +11,7 @@ function BasicView(){
             <h2>
                 W naszej hurtowni poza atrykułami spożywczymi zaopatrzysz się także w podstawowe artykuły budowlane takie jak śruby, nakrętki, krzyżaczki do glazury i wiele więcej!
             </h2>
-            <h2>
-                Aby przejść do logowania kliknij <a onClick={()=>{navigate("/login")}} href="" style={{color:"blue"}}> tutaj </a>
-            </h2>
+            {!props.logged ? <h2>Aby przejść do logowania kliknij <a onClick={()=>{navigate("/login")}} href="" style={{color:"blue"}}> tutaj </a></h2>:null}
         </Paper>
     )
 }

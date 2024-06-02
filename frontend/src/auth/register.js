@@ -1,5 +1,7 @@
 async function register(username, password, firstname, secondname, adress, setRegistered){
-    await fetch("http://localhost:8080/auth/register",
+
+    if (username != "" && password != "" && firstname != "" && secondname != "" && adress != ""){
+        await fetch("http://localhost:8080/auth/register",
         {
             method:"POST",
             body:JSON.stringify({
@@ -15,20 +17,25 @@ async function register(username, password, firstname, secondname, adress, setRe
             },
             credentials: "include"
         }
-    ).then((resp)=>{
-        if (resp.status!=200){// Created
-            console.log(resp.status)
-            return false
-        }   
-        else{
-            console.log("Uzytkownik stworzony")
-            setRegistered(true)
-            return true;
+        ).then((resp)=>{
+            if (resp.status!=200){// Created
+                console.log(resp.status)
+                return false
+            }   
+            else{
+                console.log("Uzytkownik stworzony")
+                setRegistered(true)
+                return true;
+            }
         }
+        ).catch((err)=>
+            console.error("Something went wrong: " + err)
+        )
     }
-    ).catch((err)=>
-        console.error("Something went wrong: " + err)
-    )
+
+    else{
+        alert("Uzupełnij wszystkie dane do rejestracji!")
+    }
 
 }
 
