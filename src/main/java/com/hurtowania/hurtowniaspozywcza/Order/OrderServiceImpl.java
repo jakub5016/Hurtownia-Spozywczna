@@ -93,6 +93,28 @@ public class OrderServiceImpl implements IOrderService {
             order.setStatus(OrderStatus.valueOf(String.valueOf(status)));
             if (status == OrderStatus.FINALIZED){
                 order.setDeliveryDate(LocalDate.now());
+
+
+            }else if (status == OrderStatus.ACCEPTED){
+                List<OrderedProduct> orderedProducts = order.getOrderedProducts();
+                List<Product> products = orderedProducts.stream().map(OrderedProduct::getProduct).toList();
+
+                for (int i = 0; i < orderedProducts.size(); i++) {
+                    OrderedProduct orderedProduct = orderedProducts.get(i);
+                    Product product=products.get(i);
+
+                    int newQuantity = product.getAvailableQuantity() - orderedProduct.getQuantity();
+
+                    if(newQuantity >= 0){
+
+                        product.setAvailableQuantity(newQuantity);
+                    }else{
+                        product.setAvailableQuantity(0);
+                    }
+                }
+
+                productRepository.saveAll(products);
+
             }
             orderRepository.save(order);
             return true;
